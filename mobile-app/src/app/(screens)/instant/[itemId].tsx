@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { Container, Card, Title, BodyText, Button } from '@/src/components/ui';
+import { BodyText, Button, Card, Container, Title } from '@/src/components/ui';
 import { usePredefinedItem } from '@/src/core/hooks/useInstantTasks';
 import { formatCurrency } from '@/src/core/utils/helpers';
 
 export default function ItemDetailsScreen() {
 	const { itemId } = useLocalSearchParams();
 	const router = useRouter();
-	const { data: item } = useItemQuery(itemId as string);
+	const { data: item } = usePredefinedItem(itemId as string);
 
 	if (!item) {
 		return (
