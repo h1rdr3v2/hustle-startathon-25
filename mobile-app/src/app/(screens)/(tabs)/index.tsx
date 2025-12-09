@@ -1,13 +1,23 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { Container, Card, Title, BodyText, Button } from '@/src/components/ui';
-import { usePredefinedItems } from '@/src/core/hooks/useItems';
-import { formatCurrency } from '@/src/core/utils/helpers';
 import { useRouter } from 'expo-router';
+import { BodyText, Button, Card, Container, Title } from '@/src/components/ui';
+import { usePredefinedItems } from '@/src/core/hooks/useItems';
+import { useAuthStore } from '@/src/core/stores/authStore';
+import { formatCurrency } from '@/src/core/utils/helpers';
 
 export default function InstantTab() {
 	const { data: items = [], isLoading } = usePredefinedItems();
+	const { isAuthenticated } = useAuthStore();
 	const router = useRouter();
+
+	const handleOrder = (itemId: string) => {
+		if (!isAuthenticated) {
+			router.push('/(auth)/login');
+			return;
+		}
+		router.push(`/(screens)/instant/${itemId}`);
+	};
 
 	return (
 		<Container>
@@ -24,10 +34,10 @@ export default function InstantTab() {
 							{formatCurrency(item.price)}
 						</BodyText>
 						<Button
-							title="Order"
-							onPress={() =>
-								router.push(`/(tabs)/instant/${item.id}`)
+							title={
+								isAuthenticated ? 'Order' : 'Sign In to Order'
 							}
+							onPress={() => handleOrder(item.id)}
 							fullWidth
 							style={{ marginTop: 8 }}
 						/>

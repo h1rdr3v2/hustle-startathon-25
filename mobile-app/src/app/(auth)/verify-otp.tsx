@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Stack } from 'expo-router';
-import { Container, Input, Button, Title, BodyText } from '@/src/components/ui';
-import { mockVerifyOTP } from '@/src/core/api/authApi';
 import { useRouter } from 'expo-router';
+import { BodyText, Button, Container, Input, Title } from '@/src/components/ui';
+import { mockVerifyOTP } from '@/src/core/api/authApi';
 
 export default function VerifyOTPScreen() {
 	const [code, setCode] = useState('');
@@ -17,7 +16,7 @@ export default function VerifyOTPScreen() {
 
 		if (res.success) {
 			// After OTP verified go to profile setup or main app
-			router.replace('/(tabs)');
+			router.replace('/(screens)/(tabs)');
 		} else {
 			alert(res.error || 'Invalid OTP');
 		}
@@ -25,8 +24,6 @@ export default function VerifyOTPScreen() {
 
 	return (
 		<Container>
-			<Stack.Screen options={{ headerShown: false }} />
-
 			<View style={{ marginTop: 40 }}>
 				<Title>Enter OTP</Title>
 				<BodyText style={{ marginTop: 8 }}>

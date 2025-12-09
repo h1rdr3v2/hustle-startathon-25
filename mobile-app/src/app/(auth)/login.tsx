@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Stack } from 'expo-router';
-import { useNavigation } from 'expo-router';
-import { Input, Button, Container, Title, BodyText } from '@/src/components/ui';
-import { mockLogin, mockSendOTP } from '@/src/core/api/authApi';
-import { useAuthStore } from '@/src/core/stores/authStore';
+import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
+import { useAuthStore } from '@/src/core/stores/authStore';
+import { mockLogin, mockSendOTP } from '@/src/core/api/authApi';
+import { Input, Button, Container, Title, BodyText } from '@/src/components/ui';
 
 export default function LoginScreen() {
 	const [email, setEmail] = useState('');
@@ -21,7 +19,7 @@ export default function LoginScreen() {
 
 		if (res.success && res.data) {
 			setAuth(res.data.user, res.data.token);
-			router.replace('/(tabs)');
+			router.replace('/(screens)/(tabs)');
 		} else {
 			alert(res.error || 'Login failed');
 		}
@@ -42,12 +40,10 @@ export default function LoginScreen() {
 
 	return (
 		<Container>
-			<Stack.Screen options={{ headerShown: false }} />
-
 			<View style={{ marginTop: 40 }}>
 				<Title>Welcome back</Title>
 				<BodyText style={{ marginTop: 8 }}>
-					Login to continue using Ridely
+					Login to continue using Hustle
 				</BodyText>
 
 				<Input

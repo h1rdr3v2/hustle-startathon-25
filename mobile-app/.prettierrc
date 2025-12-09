@@ -3,6 +3,20 @@
   "tabWidth": 4,
   "singleQuote": true,
   "bracketSpacing": true,
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "@ianvs/prettier-plugin-sort-imports"
+  ],
+  "importOrderParserPlugins": ["typescript", "jsx"],
+  "importOrderSortSpecifiers": true,
+  "importOrder": [
+    "^react$",
+    "^react-native$",
+    "<THIRD_PARTY_MODULES>",
+    "^@/",
+    "^[./]"
+  ],
+  "customImportSort": "(a, b) => a.length - b.length",
   "overrides": [
     {
       "files": "*.json",

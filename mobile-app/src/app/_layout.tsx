@@ -1,4 +1,3 @@
-import '../../global.css';
 import {
 	DarkTheme,
 	DefaultTheme,
@@ -9,6 +8,7 @@ import { queryClient } from '@/src/core/queryClient';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
+import '../../global.css';
 
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 
@@ -21,7 +21,8 @@ export default function RootLayout() {
 				value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
 			>
 				<Stack screenOptions={{ headerShown: false }}>
-					<Stack.Screen name="(protected)" />
+					<Stack.Screen name="(screens)" />
+					<Stack.Screen name="(auth)" />
 				</Stack>
 				<StatusBar style="auto" />
 			</ThemeProvider>
