@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
 	Button,
@@ -9,13 +9,7 @@ import {
 	Subtitle,
 	Title,
 } from '@/src/components/ui';
-import {
-	Colors,
-	FontSizes,
-	FontWeights,
-	Radius,
-	Spacing,
-} from '@/src/core/constants/theme';
+import { Colors } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import { useLocation } from '@/src/core/hooks/useLocation';
 import { usePriceEstimation } from '@/src/core/hooks/usePriceEstimation';
@@ -30,7 +24,6 @@ export default function PricePreviewScreen() {
 		taskType,
 		pickupLocation,
 		deliveryLocation,
-		pricing,
 		setPricing,
 		setCouponCode,
 		couponCode,

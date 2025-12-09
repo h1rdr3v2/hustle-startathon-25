@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-	ActivityIndicator,
-	ScrollView,
-	StyleSheet,
-	Text,
-	View,
-} from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
 	Button,
@@ -16,12 +10,7 @@ import {
 	Subtitle,
 	Title,
 } from '@/src/components/ui';
-import {
-	Colors,
-	FontSizes,
-	FontWeights,
-	Spacing,
-} from '@/src/core/constants/theme';
+import { Colors } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import { useErrandRunners } from '@/src/core/hooks/useRunners';
 import { useErrandFlowStore } from '@/src/core/stores/errandFlowStore';
