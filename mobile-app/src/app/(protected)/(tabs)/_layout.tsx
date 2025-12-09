@@ -1,14 +1,46 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TabsLayout() {
 	return (
 		<Tabs>
-			<Tabs.Screen name="index" options={{ title: 'Instant' }} />
-			<Tabs.Screen name="custom" options={{ title: 'Custom' }} />
-			<Tabs.Screen name="runner" options={{ title: 'Runner' }} />
-			<Tabs.Screen name="profile" options={{ title: 'Profile' }} />
+			<Tabs.Screen
+				name="index"
+				options={{
+					title: 'Instant',
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name="flash" size={size} color={color} />
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="custom"
+				options={{
+					title: 'Custom',
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name="create" size={size} color={color} />
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="runner"
+				options={{
+					title: 'Runner',
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name="walk" size={size} color={color} />
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="profile"
+				options={{
+					title: 'Profile',
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name="person" size={size} color={color} />
+					),
+				}}
+			/>
 		</Tabs>
 	);
 }

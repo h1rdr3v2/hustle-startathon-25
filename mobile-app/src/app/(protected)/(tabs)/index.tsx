@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
-import { Stack } from 'expo-router';
+import { FlatList } from 'react-native';
 import { Container, Card, Title, BodyText, Button } from '@/src/components/ui';
 import { usePredefinedItems } from '@/src/core/hooks/useItems';
 import { formatCurrency } from '@/src/core/utils/helpers';
@@ -12,8 +11,6 @@ export default function InstantTab() {
 
 	return (
 		<Container>
-			<Stack.Screen options={{ title: 'Instant Tasks' }} />
-
 			<FlatList
 				data={items}
 				keyExtractor={(i) => i.id}
