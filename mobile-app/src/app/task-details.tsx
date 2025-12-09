@@ -1,28 +1,14 @@
 import React, { useState } from 'react';
-import {
-	ScrollView,
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
 	Button,
-	Input,
 	SafeAreaView,
 	Section,
 	Subtitle,
 	Title,
 } from '@/src/components/ui';
-import {
-	Colors,
-	FontSizes,
-	FontWeights,
-	Radius,
-	Spacing,
-} from '@/src/core/constants/theme';
+import { Colors } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import { useErrandFlowStore } from '@/src/core/stores/errandFlowStore';
 
