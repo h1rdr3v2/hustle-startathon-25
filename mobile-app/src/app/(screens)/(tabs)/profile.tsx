@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import { Stack } from 'expo-router';
-import { Container, Title, BodyText, Button } from '@/src/components/ui';
-import { useAuthStore } from '@/src/core/stores/authStore';
-import { useRouter } from 'expo-router';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { BodyText, Button, Container, Title } from '@/src/components/ui';
+import { useAuthStore } from '@/src/core/stores/authStore';
 
 export default function ProfileTab() {
 	const { user, isAuthenticated, logout } = useAuthStore();
@@ -12,7 +11,7 @@ export default function ProfileTab() {
 
 	const handleLogout = () => {
 		logout();
-		router.push('/(tabs)');
+		router.push('/(screens)/(tabs)');
 	};
 
 	const handleLogin = () => {
@@ -22,9 +21,6 @@ export default function ProfileTab() {
 	if (!isAuthenticated || !user) {
 		return (
 			<Container>
-				<Stack.Screen
-					options={{ title: 'Profile', headerShown: true }}
-				/>
 				<ScrollView contentContainerStyle={styles.container}>
 					<View style={styles.guestCard}>
 						<View style={styles.avatarContainer}>
@@ -111,7 +107,6 @@ export default function ProfileTab() {
 
 	return (
 		<Container>
-			<Stack.Screen options={{ title: 'Profile', headerShown: true }} />
 			<ScrollView contentContainerStyle={styles.container}>
 				<View style={styles.profileHeader}>
 					<View style={styles.avatarContainer}>

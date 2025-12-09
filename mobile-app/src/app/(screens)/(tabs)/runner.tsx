@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
-import { Container, Title, BodyText, Button } from '@/src/components/ui';
-import { useAuthStore } from '@/src/core/stores/authStore';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { BodyText, Button, Container, Title } from '@/src/components/ui';
+import { useAuthStore } from '@/src/core/stores/authStore';
 
 export default function RunnerTab() {
 	const { isAuthenticated, user } = useAuthStore();
@@ -12,7 +12,6 @@ export default function RunnerTab() {
 	if (!isAuthenticated) {
 		return (
 			<Container>
-				<Stack.Screen options={{ title: 'Runner Dashboard' }} />
 				<View
 					style={{
 						flex: 1,
@@ -52,8 +51,6 @@ export default function RunnerTab() {
 
 	return (
 		<Container>
-			<Stack.Screen options={{ title: 'Runner Dashboard' }} />
-
 			<Title>Runner Mode</Title>
 			<BodyText style={{ marginTop: 8 }}>
 				See assigned tasks and accept new ones

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, ViewStyle } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, ViewStyle } from 'react-native';
 import { Colors, Layout } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 
@@ -40,7 +40,9 @@ export const Container: React.FC<ContainerProps> = ({
 	}
 
 	return (
-		<View style={[containerStyle, styles.content, style]}>{children}</View>
+		<SafeAreaView style={[containerStyle, styles.content, style]}>
+			{children}
+		</SafeAreaView>
 	);
 };
 

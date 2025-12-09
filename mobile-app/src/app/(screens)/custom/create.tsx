@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import {
-	Container,
-	Card,
-	Title,
 	BodyText,
-	Input,
 	Button,
+	Card,
+	Container,
+	Input,
+	Title,
 } from '@/src/components/ui';
 import { useCreateCustomTask } from '@/src/core/hooks/useCustomTasks';
 import { useAuthStore } from '@/src/core/stores/authStore';
-import { useWalletStore } from '@/src/core/stores/walletStore';
 import { useCustomTaskStore } from '@/src/core/stores/customTaskStore';
+import { useWalletStore } from '@/src/core/stores/walletStore';
 import { generateId } from '@/src/core/utils/helpers';
 
 export default function CreateTaskScreen() {
@@ -82,7 +82,7 @@ export default function CreateTaskScreen() {
 			if (res) {
 				// add to local custom task store for immediate UX
 				useCustomTaskStore.getState().addTask(res as any);
-				router.push('/(tabs)/custom/my-posted');
+				router.push('/(screens)/custom/my-posted');
 			} else {
 				alert('Failed to create task');
 			}

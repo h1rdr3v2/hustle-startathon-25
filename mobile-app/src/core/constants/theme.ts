@@ -7,7 +7,7 @@ import { Platform } from 'react-native';
 
 // ==================== BRAND COLORS ====================
 const brandColors = {
-	primary: '#6C63FF', // Vibrant purple - primary brand color
+	primary: '#0072ff', // Vibrant purple - primary brand color
 	primaryDark: '#5548E0',
 	primaryLight: '#8A84FF',
 

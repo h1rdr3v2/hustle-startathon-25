@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
-import { Container, Card, Title, BodyText, Button } from '@/src/components/ui';
-import { useAuthStore } from '@/src/core/stores/authStore';
+import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { BodyText, Button, Card, Container, Title } from '@/src/components/ui';
+import { useAuthStore } from '@/src/core/stores/authStore';
 
 export default function CustomTab() {
 	const { isAuthenticated } = useAuthStore();
@@ -12,7 +12,6 @@ export default function CustomTab() {
 	if (!isAuthenticated) {
 		return (
 			<Container>
-				<Stack.Screen options={{ title: 'Custom Tasks' }} />
 				<View
 					style={{
 						flex: 1,
@@ -52,8 +51,6 @@ export default function CustomTab() {
 	// For now show a placeholder and a button to create task
 	return (
 		<Container>
-			<Stack.Screen options={{ title: 'Custom Tasks' }} />
-
 			<Card>
 				<Title>Create a custom task</Title>
 				<BodyText style={{ marginTop: 8 }}>
@@ -61,7 +58,9 @@ export default function CustomTab() {
 				</BodyText>
 				<Button
 					title="Create Task"
-					onPress={() => {}}
+					onPress={() => {
+						router.push('/(screens)/custom/create');
+					}}
 					fullWidth
 					style={{ marginTop: 12 }}
 				/>

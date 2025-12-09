@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { Container, Card, Title, BodyText, Button } from '@/src/components/ui';
+import { BodyText, Button, Card, Container, Title } from '@/src/components/ui';
 import { useOpenCustomTasks } from '@/src/core/hooks/useCustomTasks';
 
 export default function ExploreTasksScreen() {
@@ -28,7 +28,7 @@ export default function ExploreTasksScreen() {
 						<Button
 							title="View"
 							onPress={() =>
-								router.push(`/(tabs)/custom/${item.id}`)
+								router.push(`/(screens)/custom/${item.id}`)
 							}
 							fullWidth
 							style={{ marginTop: 8 }}

@@ -1,5 +1,3 @@
-// Core Types for Ridely
-
 // ==================== LOCATION ====================
 export interface Location {
 	latitude: number;
