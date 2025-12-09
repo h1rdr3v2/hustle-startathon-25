@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
-	BodyText,
 	Button,
 	Input,
 	SafeAreaView,
+	Subtitle,
 	Title,
 } from '@/src/components/ui';
 import { mockLogin } from '@/src/core/api/authApi';
@@ -37,21 +37,25 @@ export default function LoginScreen() {
 	const colors = Colors[colorScheme ?? 'light'];
 
 	return (
-		<SafeAreaView
-			spaced
-			avoidKeyboard
-			scrollable
-			style={{ backgroundColor: colors.background, paddingInline: 4 }}
-		>
-			<View>
-				<Title>Welcome back</Title>
-				<BodyText style={{ marginTop: 8, marginBottom: 12 }}>
+		<SafeAreaView spaced avoidKeyboard scrollable>
+			{/* Header */}
+			<View className="mb-8 mt-4">
+				<Title>Welcome back 👋</Title>
+				<Subtitle
+					color={colors.textSecondary}
+					className="text-base leading-6 mt-2"
+				>
 					Login to continue using Hustle
-				</BodyText>
+				</Subtitle>
+			</View>
 
+			{/* Login Form */}
+			<View className="mb-6">
 				<Input
 					label="Email"
 					placeholder="you@example.com"
+					keyboardType="email-address"
+					autoCapitalize="none"
 					value={email}
 					onChangeText={setEmail}
 				/>
@@ -64,21 +68,20 @@ export default function LoginScreen() {
 					onChangeText={setPassword}
 				/>
 
-				<View style={styles.rowBetween}>
-					<Pressable
+				<View className="flex-row justify-end mb-4">
+					<TouchableOpacity
 						onPress={() =>
 							alert('Forgot password flow not implemented yet')
 						}
+						className="py-1"
 					>
 						<Text
-							style={{
-								color: colors.primary,
-								fontWeight: '600',
-							}}
+							className="text-base font-semibold"
+							style={{ color: colors.primary }}
 						>
 							Forgot password?
 						</Text>
-					</Pressable>
+					</TouchableOpacity>
 				</View>
 
 				<Button
@@ -86,60 +89,62 @@ export default function LoginScreen() {
 					onPress={handleLogin}
 					loading={loading}
 					fullWidth
+					size="large"
 				/>
+			</View>
 
-				<View style={{ marginTop: 14 }}>
-					<BodyText align="center" style={{ marginBottom: 10 }}>
-						Or continue with
-					</BodyText>
-					<Button
-						title="Continue with Google"
-						variant="outline"
-						onPress={() => alert('Social login not implemented')}
-						fullWidth
-					/>
-					<View style={{ height: 10 }} />
-					<Button
-						title="Continue with Facebook"
-						variant="outline"
-						onPress={() => alert('Social login not implemented')}
-						fullWidth
-					/>
-				</View>
+			{/* Divider */}
+			<View className="flex-row items-center mb-6">
+				<View
+					className="flex-1 h-[1px]"
+					style={{ backgroundColor: colors.border }}
+				/>
+				<Text
+					className="mx-4 text-sm"
+					style={{ color: colors.textSecondary }}
+				>
+					Or continue with
+				</Text>
+				<View
+					className="flex-1 h-[1px]"
+					style={{ backgroundColor: colors.border }}
+				/>
+			</View>
 
-				<View style={{ marginTop: 18, alignItems: 'center' }}>
-					<BodyText>
-						Don’t have an account?{' '}
-						<Pressable onPress={() => router.push('/signup')}>
-							<Text
-								style={{
-									color: colors.primary,
-									fontWeight: '700',
-								}}
-							>
-								Create one
-							</Text>
-						</Pressable>
-					</BodyText>
+			{/* Social Login */}
+			<View className="gap-3 mb-6">
+				<Button
+					title="Continue with Google"
+					variant="outline"
+					onPress={() => alert('Social login not implemented')}
+					fullWidth
+				/>
+				<Button
+					title="Continue with Facebook"
+					variant="outline"
+					onPress={() => alert('Social login not implemented')}
+					fullWidth
+				/>
+			</View>
+
+			{/* Sign Up Link */}
+			<View className="items-center pt-4">
+				<View className="flex-row items-center">
+					<Text className="text-base" style={{ color: colors.text }}>
+						Don't have an account?{' '}
+					</Text>
+					<TouchableOpacity
+						onPress={() => router.push('/(auth)/signup')}
+					>
+						<Text
+							className="text-base font-bold"
+							style={{ color: colors.primary }}
+						>
+							Sign up
+						</Text>
+					</TouchableOpacity>
 				</View>
 			</View>
 		</SafeAreaView>
 	);
 }
-
-const styles = StyleSheet.create({
-	outer: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-		width: '100%',
-		paddingHorizontal: 12,
-	},
-	rowBetween: {
-		width: '100%',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		marginVertical: 8,
-	},
-});
