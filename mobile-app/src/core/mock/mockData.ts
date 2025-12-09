@@ -1,6 +1,52 @@
 // Mock data for vendors and predefined items in Abia State
 
-import { Location, PredefinedItem, Vendor } from '@/src/core/types';
+import { Location, PredefinedItem, Section, Vendor } from '@/src/core/types';
+
+// Mock sections
+export const mockSections: Section[] = [
+	{
+		id: 'section_1',
+		name: 'Food',
+		type: 'food',
+		icon: '🍔',
+		description: 'Delicious meals and snacks',
+	},
+	{
+		id: 'section_2',
+		name: 'Gadgets',
+		type: 'gadgets',
+		icon: '📱',
+		description: 'Tech accessories and electronics',
+	},
+	{
+		id: 'section_3',
+		name: 'Groceries',
+		type: 'groceries',
+		icon: '🛒',
+		description: 'Fresh groceries and daily essentials',
+	},
+	{
+		id: 'section_4',
+		name: 'Pharmacy',
+		type: 'pharmacy',
+		icon: '💊',
+		description: 'Medicines and health products',
+	},
+	{
+		id: 'section_5',
+		name: 'Drinks',
+		type: 'drinks',
+		icon: '🥤',
+		description: 'Refreshing beverages',
+	},
+	{
+		id: 'section_6',
+		name: 'Stationery',
+		type: 'stationery',
+		icon: '📚',
+		description: 'School and office supplies',
+	},
+];
 
 // Mock locations in Abia State
 export const mockLocations: Record<string, Location> = {
@@ -38,6 +84,7 @@ export const mockLocations: Record<string, Location> = {
 
 // Mock vendors
 export const mockVendors: Vendor[] = [
+	// Food vendors
 	{
 		id: 'vendor_1',
 		name: 'Crunchies',
@@ -57,6 +104,25 @@ export const mockVendors: Vendor[] = [
 		logo: '🍕',
 	},
 	{
+		id: 'vendor_7',
+		name: "Duke's Eateries",
+		category: 'food',
+		location: mockLocations.abaMarket,
+		rating: 4.6,
+		isOpen: true,
+		logo: '🍽️',
+	},
+	{
+		id: 'vendor_8',
+		name: 'Exito',
+		category: 'food',
+		location: mockLocations.umuahiaCenter,
+		rating: 4.8,
+		isOpen: true,
+		logo: '🥘',
+	},
+	// Groceries vendors
+	{
 		id: 'vendor_3',
 		name: 'ShopRite Aba',
 		category: 'groceries',
@@ -65,6 +131,7 @@ export const mockVendors: Vendor[] = [
 		isOpen: true,
 		logo: '🛒',
 	},
+	// Drinks vendors
 	{
 		id: 'vendor_4',
 		name: 'Fresh Drinks',
@@ -74,6 +141,7 @@ export const mockVendors: Vendor[] = [
 		isOpen: true,
 		logo: '🥤',
 	},
+	// Pharmacy vendors
 	{
 		id: 'vendor_5',
 		name: 'HealthPlus Pharmacy',
@@ -83,6 +151,7 @@ export const mockVendors: Vendor[] = [
 		isOpen: true,
 		logo: '💊',
 	},
+	// Stationery vendors
 	{
 		id: 'vendor_6',
 		name: 'Campus Stationery',
@@ -91,6 +160,25 @@ export const mockVendors: Vendor[] = [
 		rating: 4.4,
 		isOpen: true,
 		logo: '📚',
+	},
+	// Gadgets vendors
+	{
+		id: 'vendor_9',
+		name: 'TechZone',
+		category: 'other',
+		location: mockLocations.abaMarket,
+		rating: 4.5,
+		isOpen: true,
+		logo: '📱',
+	},
+	{
+		id: 'vendor_10',
+		name: 'Gadget Hub',
+		category: 'other',
+		location: mockLocations.shopRiteAba,
+		rating: 4.7,
+		isOpen: true,
+		logo: '💻',
 	},
 ];
 
@@ -245,6 +333,134 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		price: 500,
 		category: 'stationery',
 		image: '✏️',
+		isAvailable: true,
+	},
+
+	// Duke's Eateries items
+	{
+		id: 'item_16',
+		vendorId: 'vendor_7',
+		name: 'Jollof Rice & Chicken',
+		description: 'Special jollof rice with grilled chicken',
+		price: 2800,
+		category: 'food',
+		image: 'https://www.allnigerianfoods.com/wp-content/uploads/jollof-rice-chicken.jpg',
+		isAvailable: true,
+	},
+	{
+		id: 'item_17',
+		vendorId: 'vendor_7',
+		name: 'Fried Rice',
+		description: 'Delicious fried rice with vegetables',
+		price: 2500,
+		category: 'food',
+		image: 'https://www.seriouseats.com/thmb/bjb8S0MCKGVlkTXZY1Ra8Hwqa3w=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2016__04__20160426-fried-rice-food-lab-32-c1496ffebc184d39b667da93bddc9f89.jpg',
+		isAvailable: true,
+	},
+	{
+		id: 'item_18',
+		vendorId: 'vendor_7',
+		name: 'Pepper Soup',
+		description: 'Hot spicy Nigerian pepper soup',
+		price: 1800,
+		category: 'food',
+		image: 'https://www.allnigerianrecipes.com/wp-content/uploads/2014/10/nigerian-goat-meat-pepper-soup.jpg',
+		isAvailable: true,
+	},
+
+	// Exito items
+	{
+		id: 'item_19',
+		vendorId: 'vendor_8',
+		name: 'Amala & Ewedu',
+		description: 'Traditional amala with ewedu soup',
+		price: 2000,
+		category: 'food',
+		image: 'https://www.allnigerianfoods.com/wp-content/uploads/amala-ewedu.jpg',
+		isAvailable: true,
+	},
+	{
+		id: 'item_20',
+		vendorId: 'vendor_8',
+		name: 'Pounded Yam & Egusi',
+		description: 'Smooth pounded yam with egusi soup',
+		price: 3000,
+		category: 'food',
+		image: 'https://www.allnigerianfoods.com/wp-content/uploads/pounded-yam-egusi.jpg',
+		isAvailable: true,
+	},
+	{
+		id: 'item_21',
+		vendorId: 'vendor_8',
+		name: 'Ofada Rice & Stew',
+		description: 'Local ofada rice with spicy stew',
+		price: 2500,
+		category: 'food',
+		image: 'https://www.allnigerianfoods.com/wp-content/uploads/ofada-rice.jpg',
+		isAvailable: true,
+	},
+
+	// TechZone items
+	{
+		id: 'item_22',
+		vendorId: 'vendor_9',
+		name: 'Wireless Earbuds',
+		description: 'Bluetooth wireless earbuds with charging case',
+		price: 8500,
+		category: 'other',
+		image: 'https://m.media-amazon.com/images/I/61OMi4F9u1L._AC_SL1500_.jpg',
+		isAvailable: true,
+	},
+	{
+		id: 'item_23',
+		vendorId: 'vendor_9',
+		name: 'Phone Charger (Fast)',
+		description: '20W fast charging adapter',
+		price: 3500,
+		category: 'other',
+		image: 'https://m.media-amazon.com/images/I/51ytVLK+SQL._AC_SL1000_.jpg',
+		isAvailable: true,
+	},
+	{
+		id: 'item_24',
+		vendorId: 'vendor_9',
+		name: 'USB Cable (Type-C)',
+		description: 'Durable USB Type-C cable 1.5m',
+		price: 1200,
+		category: 'other',
+		image: 'https://m.media-amazon.com/images/I/61Xvr5xXt6L._AC_SL1500_.jpg',
+		isAvailable: true,
+	},
+
+	// Gadget Hub items
+	{
+		id: 'item_25',
+		vendorId: 'vendor_10',
+		name: 'Power Bank (10000mAh)',
+		description: 'Portable power bank with dual USB ports',
+		price: 6500,
+		category: 'other',
+		image: 'https://m.media-amazon.com/images/I/61z45iCbZFL._AC_SL1500_.jpg',
+		isAvailable: true,
+	},
+	{
+		id: 'item_26',
+		vendorId: 'vendor_10',
+		name: 'Phone Stand',
+		description: 'Adjustable phone holder stand',
+		price: 2500,
+		category: 'other',
+		image: 'https://m.media-amazon.com/images/I/61T6NyBLTYL._AC_SL1500_.jpg',
+		isAvailable: true,
+	},
+	{
+		id: 'item_27',
+		vendorId: 'vendor_10',
+		name: 'Screen Protector',
+		description: 'Tempered glass screen protector',
+		price: 1500,
+		category: 'other',
+		image: 'https://m.media-amazon.com/images/I/71JEYaHYdSL._AC_SL1500_.jpg',
 		isAvailable: true,
 	},
 ];

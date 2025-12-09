@@ -74,6 +74,22 @@ export type VendorCategory =
 	| 'stationery'
 	| 'other';
 
+export type SectionType =
+	| 'food'
+	| 'gadgets'
+	| 'groceries'
+	| 'pharmacy'
+	| 'drinks'
+	| 'stationery';
+
+export interface Section {
+	id: string;
+	name: string;
+	type: SectionType;
+	icon: string;
+	description: string;
+}
+
 export interface Vendor {
 	id: string;
 	name: string;
@@ -247,6 +263,105 @@ export interface FareCalculationResult {
 	baseFare: number;
 	distanceFare: number;
 	totalFare: number;
+}
+
+// ==================== ERRAND FLOW ====================
+export type ErrandTaskType =
+	| 'buy_food'
+	| 'run_errand'
+	| 'pick_up_deliver'
+	| 'make_purchase'
+	| 'transport_item';
+
+export type ErrandFlowStep =
+	| 'task_selection'
+	| 'location_confirmation'
+	| 'task_details'
+	| 'price_preview'
+	| 'runner_assignment'
+	| 'final_confirmation'
+	| 'completed';
+
+export type ErrandStatus =
+	| 'draft'
+	| 'pending_assignment'
+	| 'assigned'
+	| 'in_progress'
+	| 'delivered'
+	| 'completed'
+	| 'cancelled';
+
+export interface ErrandLocation {
+	latitude: number;
+	longitude: number;
+	address: string;
+	city: string;
+	label?: string; // e.g., "Home", "Work"
+	instructions?: string;
+}
+
+export interface ErrandTaskOption {
+	id: ErrandTaskType;
+	title: string;
+	description: string;
+	icon: string;
+	color: string;
+}
+
+export interface ErrandTaskDetails {
+	description: string;
+	items?: string[];
+	specialInstructions?: string;
+	scheduledTime?: Date; // null means "now"
+	attachments?: string[];
+}
+
+export interface ErrandPricing {
+	baseFee: number;
+	distanceFee: number;
+	itemPurchaseCost: number;
+	platformFee: number;
+	discount: number;
+	totalAmount: number;
+	estimatedDistance: number; // in km
+}
+
+export interface SelectedRunner {
+	id: string;
+	name: string;
+	rating: number;
+	totalDeliveries: number;
+	distance: number; // distance from pickup location
+	estimatedArrival: number; // minutes
+	profilePicture?: string;
+	phone: string;
+}
+
+export interface PaymentMethod {
+	id: string;
+	type: 'wallet' | 'card' | 'cash';
+	label: string;
+	details?: string; // e.g., "**** 4242" for card
+	isDefault: boolean;
+}
+
+export interface ErrandFlowState {
+	currentStep: ErrandFlowStep;
+	taskType: ErrandTaskType | null;
+	pickupLocation: ErrandLocation | null;
+	deliveryLocation: ErrandLocation | null;
+	taskDetails: ErrandTaskDetails | null;
+	pricing: ErrandPricing | null;
+	selectedRunner: SelectedRunner | null;
+	paymentMethod: PaymentMethod | null;
+	couponCode?: string;
+	status: ErrandStatus;
+}
+
+export interface SavedAddress extends ErrandLocation {
+	id: string;
+	userId: string;
+	isDefault: boolean;
 }
 
 // ==================== API RESPONSES ====================

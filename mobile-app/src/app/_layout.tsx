@@ -20,10 +20,7 @@ export default function RootLayout() {
 				value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
 			>
 				<Stack screenOptions={{ headerShown: false }}>
-					<Stack.Screen name="(screens)" />
-					<Stack.Screen name="(auth)" />
-					<Stack.Screen name="custom" />
-					<Stack.Screen name="instant" />
+					<Stack.Screen name="index)" />
 				</Stack>
 				<StatusBar style="auto" />
 			</ThemeProvider>

@@ -83,6 +83,7 @@ export const Colors = {
 		tabBackground: neutralColors.white,
 
 		// Card
+		card: neutralColors.white, // Shorthand for card background
 		cardBackground: neutralColors.white,
 		cardBorder: neutralColors.gray200,
 
@@ -137,6 +138,7 @@ export const Colors = {
 		tabBackground: neutralColors.gray800,
 
 		// Card
+		card: neutralColors.gray800, // Shorthand for card background
 		cardBackground: neutralColors.gray800,
 		cardBorder: neutralColors.gray700,
 
