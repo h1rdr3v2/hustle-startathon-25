@@ -1,6 +1,6 @@
 // Mock data for vendors and predefined items in Abia State
 
-import { Vendor, PredefinedItem, Location } from '@/src/core/types';
+import { Location, PredefinedItem, Vendor } from '@/src/core/types';
 
 // Mock locations in Abia State
 export const mockLocations: Record<string, Location> = {
@@ -104,7 +104,7 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		description: 'Juicy beef burger with fries',
 		price: 2500,
 		category: 'food',
-		image: '🍔',
+		image: 'https://www.onceuponachef.com/images/2024/02/bulgogi-burgers-1.jpg',
 		isAvailable: true,
 	},
 	{
@@ -114,7 +114,7 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		description: 'Spicy chicken wings (6 pcs)',
 		price: 2000,
 		category: 'food',
-		image: '🍗',
+		image: 'https://www.allrecipes.com/thmb/IAGTZKbsS1YkRcbA-MlKASk7T5w=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/241152-fried-chicken-wings-ddmfs-hero-1x2-1261-7201cc37727446adb6698c269585d5a0.jpg',
 		isAvailable: true,
 	},
 	{
@@ -124,7 +124,7 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		description: 'Chicken shawarma wrap',
 		price: 1500,
 		category: 'food',
-		image: '🌯',
+		image: 'https://fishandmeat.hk/wp-content/uploads/2025/05/arabic-chicken-shawarma-sandwich-recipe-1747792750.jpg',
 		isAvailable: true,
 	},
 
@@ -136,7 +136,7 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		description: 'Large pepperoni pizza',
 		price: 4500,
 		category: 'food',
-		image: '🍕',
+		image: 'https://mojo.generalmills.com/api/public/content/iD9XDP4qRGCvhuXE9QVkxg_gmi_hi_res_jpeg.jpeg?v=ce3e36a9&t=eae6004af7d84bc5a9fa522ac84b14a8',
 		isAvailable: true,
 	},
 	{
@@ -146,7 +146,7 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		description: 'Creamy pasta with bacon',
 		price: 3000,
 		category: 'food',
-		image: '🍝',
+		image: 'https://static01.nyt.com/images/2021/02/14/dining/carbonara-horizontal/carbonara-horizontal-videoSixteenByNineJumbo1600-v2.jpg',
 		isAvailable: true,
 	},
 
@@ -158,7 +158,7 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		description: 'Peak milk 1 liter',
 		price: 1200,
 		category: 'groceries',
-		image: '🥛',
+		image: 'https://cdn.prod.website-files.com/62fa2013b83f2d453f8f8300/644a420a6c2db560fe8bdb75_OpenGraph_products.jpg',
 		isAvailable: true,
 	},
 	{
@@ -168,17 +168,7 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		description: 'Agege bread large size',
 		price: 800,
 		category: 'groceries',
-		image: '🍞',
-		isAvailable: true,
-	},
-	{
-		id: 'item_8',
-		vendorId: 'vendor_3',
-		name: 'Eggs (Crate)',
-		description: '30 eggs in a crate',
-		price: 2800,
-		category: 'groceries',
-		image: '🥚',
+		image: 'https://panamarbakery.com/large-loaf-340g',
 		isAvailable: true,
 	},
 
@@ -190,7 +180,7 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		description: 'Cold Coca-Cola bottle',
 		price: 300,
 		category: 'drinks',
-		image: '🥤',
+		image: 'https://www.drinksonline.store/wp-content/uploads/2022/08/cocacola.jpg',
 		isAvailable: true,
 	},
 	{
@@ -200,7 +190,7 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		description: 'Fresh mixed fruit smoothie',
 		price: 1000,
 		category: 'drinks',
-		image: '🥤',
+		image: 'https://www.budgetbytes.com/wp-content/uploads/2023/12/Mixed-Berry-Smoothie-Side.jpg',
 		isAvailable: true,
 	},
 	{
@@ -210,7 +200,7 @@ export const mockPredefinedItems: PredefinedItem[] = [
 		description: 'Lucozade Energy boost',
 		price: 500,
 		category: 'drinks',
-		image: '⚡',
+		image: 'https://www.kroger.com/product/images/xlarge/front/0085004042725',
 		isAvailable: true,
 	},
 

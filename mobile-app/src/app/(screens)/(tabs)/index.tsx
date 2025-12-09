@@ -1,5 +1,11 @@
 import React from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import {
+	FlatList,
+	ImageBackground,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import { LoadingSpinner, SafeAreaView } from '@/src/components/ui';
 import { usePredefinedItems } from '@/src/core/hooks/useItems';
@@ -13,7 +19,7 @@ export default function InstantTab() {
 		refetch,
 		isRefetching,
 	} = usePredefinedItems();
-	const { isAuthenticated } = useAuthStore();
+	const { isAuthenticated, user } = useAuthStore();
 	const router = useRouter();
 
 	const handleOrder = (itemId: string) => {
@@ -48,12 +54,11 @@ export default function InstantTab() {
 			bounces
 			refreshing={isRefetching}
 			onRefresh={handleRefresh}
-			refreshColors={['#6366f1', '#8b5cf6', '#a855f7']}
 		>
 			{/* Header Section */}
 			<View className="mb-6 mt-2">
 				<Text className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-					Instant Orders
+					Hi {user?.name || 'Guest'}
 				</Text>
 				<Text className="text-base text-gray-600 dark:text-gray-300">
 					Quick delivery at your fingertips
@@ -78,7 +83,7 @@ export default function InstantTab() {
 				scrollEnabled={false}
 				contentContainerStyle={{ paddingBottom: 20 }}
 				showsVerticalScrollIndicator={false}
-				renderItem={({ item, index }) => (
+				renderItem={({ item }) => (
 					<TouchableOpacity
 						activeOpacity={0.95}
 						onPress={() => handleOrder(item.id)}
@@ -89,33 +94,37 @@ export default function InstantTab() {
 					>
 						{/* Card Container */}
 						<View className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700">
-							{/* Gradient Header */}
-							<View className="h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
+							{/* Image with Dark Overlay and Service Name */}
+							<View className="relative h-48">
+								<ImageBackground
+									source={{
+										uri:
+											item.image ||
+											'https://via.placeholder.com/400x200?text=No+Image',
+									}}
+									className="w-full h-full"
+									resizeMode="cover"
+								>
+									{/* Dark Overlay */}
+									<View className="absolute inset-0 bg-black/50" />
 
-							{/* Content */}
-							<View className="p-5">
-								{/* Title & Badge Row */}
-								<View className="flex-row items-start justify-between mb-3">
-									<View className="flex-1 mr-3">
-										<Text className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+									{/* Service Name on Image */}
+									<View className="absolute inset-0 justify-end p-5">
+										<Text className="text-2xl font-bold text-white mb-1">
 											{item.name}
 										</Text>
 										<View className="flex-row items-center">
 											<View className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-											<Text className="text-xs font-medium text-green-600 dark:text-green-400">
+											<Text className="text-xs font-medium text-green-400">
 												Available Now
 											</Text>
 										</View>
 									</View>
+								</ImageBackground>
+							</View>
 
-									{/* Item Number Badge */}
-									<View className="bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1.5 rounded-full">
-										<Text className="text-xs font-bold text-indigo-600 dark:text-indigo-300">
-											#{index + 1}
-										</Text>
-									</View>
-								</View>
-
+							{/* Content */}
+							<View className="p-5">
 								{/* Description */}
 								<Text
 									className="text-sm text-gray-600 dark:text-gray-300 mb-4 leading-5"
@@ -143,7 +152,7 @@ export default function InstantTab() {
 									<TouchableOpacity
 										onPress={() => handleOrder(item.id)}
 										activeOpacity={0.8}
-										className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3.5 rounded-2xl shadow-md"
+										className="bg-gradient-to-r bg-blue-600 px-6 py-3.5 rounded-2xl shadow-md"
 									>
 										<View className="flex-row items-center">
 											<Text className="text-white font-bold text-sm mr-1">
