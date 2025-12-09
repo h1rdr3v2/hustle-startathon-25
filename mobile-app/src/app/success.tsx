@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { SafeAreaView, Button, Title } from '@/src/components/ui';
+import { Button, SafeAreaView, Title } from '@/src/components/ui';
 import {
 	Colors,
-	Spacing,
 	FontSizes,
 	FontWeights,
+	Spacing,
 } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import { useErrandFlowStore } from '@/src/core/stores/errandFlowStore';
@@ -33,7 +33,7 @@ export default function SuccessScreen() {
 
 	const handleNewRequest = () => {
 		resetFlow();
-		router.replace('/(screens)/errand');
+		router.replace('/');
 	};
 
 	return (
@@ -42,7 +42,12 @@ export default function SuccessScreen() {
 		>
 			<View style={styles.content}>
 				{/* Success Animation/Icon */}
-				<View style={[styles.iconContainer, { backgroundColor: '#10B981' + '20' }]}>
+				<View
+					style={[
+						styles.iconContainer,
+						{ backgroundColor: '#10B981' + '20' },
+					]}
+				>
 					<Text style={styles.successIcon}>✓</Text>
 				</View>
 
@@ -52,8 +57,8 @@ export default function SuccessScreen() {
 				{/* Message */}
 				<Text style={[styles.message, { color: colors.textSecondary }]}>
 					Your errand request has been successfully submitted.{' '}
-					{selectedRunner?.name} has been notified and will start working on your
-					task shortly.
+					{selectedRunner?.name} has been notified and will start
+					working on your task shortly.
 				</Text>
 
 				{/* Info Cards */}
@@ -68,10 +73,17 @@ export default function SuccessScreen() {
 						]}
 					>
 						<Text style={styles.infoEmoji}>👤</Text>
-						<Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
+						<Text
+							style={[
+								styles.infoLabel,
+								{ color: colors.textSecondary },
+							]}
+						>
 							Runner
 						</Text>
-						<Text style={[styles.infoValue, { color: colors.text }]}>
+						<Text
+							style={[styles.infoValue, { color: colors.text }]}
+						>
 							{selectedRunner?.name || 'Assigned'}
 						</Text>
 					</View>
@@ -86,10 +98,17 @@ export default function SuccessScreen() {
 						]}
 					>
 						<Text style={styles.infoEmoji}>⏱️</Text>
-						<Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
+						<Text
+							style={[
+								styles.infoLabel,
+								{ color: colors.textSecondary },
+							]}
+						>
 							Est. Arrival
 						</Text>
-						<Text style={[styles.infoValue, { color: colors.text }]}>
+						<Text
+							style={[styles.infoValue, { color: colors.text }]}
+						>
 							{selectedRunner?.estimatedArrival || 15} min
 						</Text>
 					</View>

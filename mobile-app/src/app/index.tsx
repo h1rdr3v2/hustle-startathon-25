@@ -1,14 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { OptionCard, SafeAreaView, Subtitle, Title } from '@/src/components/ui';
 import { ERRAND_TASK_OPTIONS } from '@/src/core/constants/errandTasks';
-import {
-	Colors,
-	FontSizes,
-	FontWeights,
-	Spacing,
-} from '@/src/core/constants/theme';
+import { Colors } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import { useAuthStore } from '@/src/core/stores/authStore';
 import { useErrandFlowStore } from '@/src/core/stores/errandFlowStore';
@@ -34,21 +29,52 @@ export default function ErrandHomeScreen() {
 
 	return (
 		<SafeAreaView spaced scrollable>
-			{/* Header */}
-			<View style={styles.header}>
-				<Text
-					style={[styles.greeting, { color: colors.textSecondary }]}
-				>
-					Hi {user?.name || 'there'}! 👋
-				</Text>
-				<Title style={styles.title}>I want to...</Title>
-				<Subtitle color={colors.textSecondary} style={styles.subtitle}>
+			{/* Header with Avatar */}
+			<View className="mb-8">
+				{/* Avatar and Welcome Row */}
+				<View className="flex-row justify-between  mb-2 items-center">
+					<View className="flex-1">
+						<Text
+							className="text-base mb-1"
+							style={{ color: colors.textSecondary }}
+						>
+							Hi {user?.name || 'there'}! 👋
+						</Text>
+					</View>
+
+					{isAuthenticated ? (
+						<TouchableOpacity
+							onPress={() => router.push('/profile')}
+							className="w-12 h-12 rounded-full items-center justify-center"
+							style={{ backgroundColor: colors.primary + '20' }}
+						>
+							<Text className="text-xl">
+								{user?.name
+									? user.name.charAt(0).toUpperCase()
+									: '👤'}
+							</Text>
+						</TouchableOpacity>
+					) : (
+						<TouchableOpacity
+							onPress={() => router.push('/(auth)/login')}
+							className="px-4 py-2 rounded-full"
+							style={{ backgroundColor: colors.primary }}
+						>
+							<Text className="text-white font-semibold">
+								Login
+							</Text>
+						</TouchableOpacity>
+					)}
+				</View>
+
+				<Title>I want to...</Title>
+				<Subtitle color={colors.textSecondary}>
 					Choose what you need help with today
 				</Subtitle>
 			</View>
 
 			{/* Task Options */}
-			<View style={styles.optionsContainer}>
+			<View className="mb-8">
 				{ERRAND_TASK_OPTIONS.map((option) => (
 					<OptionCard
 						key={option.id}
@@ -62,11 +88,14 @@ export default function ErrandHomeScreen() {
 			</View>
 
 			{/* Helper Text */}
-			<View style={styles.helpSection}>
-				<Text style={[styles.helpTitle, { color: colors.text }]}>
+			<View className="pt-4">
+				<Text
+					className="text-lg font-bold mb-4"
+					style={{ color: colors.text }}
+				>
 					How it works
 				</Text>
-				<View style={styles.stepContainer}>
+				<View className="gap-4">
 					<StepItem
 						number="1"
 						text="Choose your task type"
@@ -104,84 +133,86 @@ const StepItem: React.FC<StepItemProps> = ({ number, text, color }) => {
 	const colors = Colors[colorScheme ?? 'light'];
 
 	return (
-		<View style={styles.stepItem}>
+		<View className="flex-row items-center">
 			<View
-				style={[
-					styles.stepNumber,
-					{ backgroundColor: color + '20', borderColor: color },
-				]}
+				className="w-8 h-8 rounded-full border-2 justify-center items-center mr-4"
+				style={{ backgroundColor: color + '20', borderColor: color }}
 			>
-				<Text style={[styles.stepNumberText, { color: color }]}>
+				<Text className="text-base font-bold" style={{ color: color }}>
 					{number}
 				</Text>
 			</View>
-			<Text style={[styles.stepText, { color: colors.text }]}>
+			<Text
+				className="flex-1 text-base leading-5"
+				style={{ color: colors.text }}
+			>
 				{text}
 			</Text>
 		</View>
 	);
 };
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-	scrollView: {
-		flex: 1,
-	},
-	scrollContent: {
-		paddingHorizontal: Spacing.lg,
-		paddingBottom: Spacing.xl * 2,
-	},
-	header: {
-		marginTop: Spacing.xl,
-		marginBottom: Spacing.xl,
-	},
-	greeting: {
-		fontSize: FontSizes.md,
-		marginBottom: Spacing.xs,
-	},
-	title: {
-		marginBottom: Spacing.sm,
-	},
-	subtitle: {
-		fontSize: FontSizes.md,
-		lineHeight: 22,
-	},
-	optionsContainer: {
-		marginBottom: Spacing.xl,
-	},
-	helpSection: {
-		paddingTop: Spacing.lg,
-	},
-	helpTitle: {
-		fontSize: FontSizes.lg,
-		fontWeight: FontWeights.bold,
-		marginBottom: Spacing.md,
-	},
-	stepContainer: {
-		gap: Spacing.md,
-	},
-	stepItem: {
-		flexDirection: 'row',
-		alignItems: 'center',
-	},
-	stepNumber: {
-		width: 32,
-		height: 32,
-		borderRadius: 16,
-		borderWidth: 2,
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginRight: Spacing.md,
-	},
-	stepNumberText: {
-		fontSize: FontSizes.md,
-		fontWeight: FontWeights.bold,
-	},
-	stepText: {
-		flex: 1,
-		fontSize: FontSizes.md,
-		lineHeight: 20,
-	},
-});
+// Unused - replaced with Tailwind classes
+// const styles = StyleSheet.create({
+// 	container: {
+// 		flex: 1,
+// 	},
+// 	scrollView: {
+// 		flex: 1,
+// 	},
+// 	scrollContent: {
+// 		paddingHorizontal: Spacing.lg,
+// 		paddingBottom: Spacing.xl * 2,
+// 	},
+// 	header: {
+// 		marginTop: Spacing.xl,
+// 		marginBottom: Spacing.xl,
+// 	},
+// 	greeting: {
+// 		fontSize: FontSizes.md,
+// 		marginBottom: Spacing.xs,
+// 	},
+// 	title: {
+// 		marginBottom: Spacing.sm,
+// 	},
+// 	subtitle: {
+// 		fontSize: FontSizes.md,
+// 		lineHeight: 22,
+// 	},
+// 	optionsContainer: {
+// 		marginBottom: Spacing.xl,
+// 	},
+// 	helpSection: {
+// 		paddingTop: Spacing.lg,
+// 	},
+// 	helpTitle: {
+// 		fontSize: FontSizes.lg,
+// 		fontWeight: FontWeights.bold,
+// 		marginBottom: Spacing.md,
+// 	},
+// 	stepContainer: {
+// 		gap: Spacing.md,
+// 	},
+// 	stepItem: {
+// 		flexDirection: 'row',
+// 		alignItems: 'center',
+// 	},
+// 	stepNumber: {
+// 		width: 32,
+// 		height: 32,
+// 		borderRadius: 16,
+// 		borderWidth: 2,
+// 		justifyContent: 'center',
+// 		alignItems: 'center',
+// 		marginRight: Spacing.md,
+// 	},
+// 	stepNumberText: {
+// 		fontSize: FontSizes.md,
+// 		fontWeight: FontWeights.bold,
+// 	},
+// 	stepText: {
+// 		flex: 1,
+// 		fontSize: FontSizes.md,
+// 		lineHeight: 20,
+// 	},
+// });

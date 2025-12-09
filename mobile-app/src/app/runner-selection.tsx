@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import {
+	ActivityIndicator,
+	ScrollView,
+	StyleSheet,
+	Text,
+	View,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 import {
-	SafeAreaView,
 	Button,
-	Title,
-	Subtitle,
-	Section,
-	RunnerCard,
 	LoadingSpinner,
+	RunnerCard,
+	SafeAreaView,
+	Section,
+	Subtitle,
+	Title,
 } from '@/src/components/ui';
 import {
 	Colors,
-	Spacing,
 	FontSizes,
 	FontWeights,
+	Spacing,
 } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
-import { useErrandFlowStore } from '@/src/core/stores/errandFlowStore';
 import { useErrandRunners } from '@/src/core/hooks/useRunners';
+import { useErrandFlowStore } from '@/src/core/stores/errandFlowStore';
 
 export default function RunnerSelectionScreen() {
 	const colorScheme = useColorScheme();
@@ -47,7 +53,11 @@ export default function RunnerSelectionScreen() {
 
 	useEffect(() => {
 		// Auto-select closest runner after 2 seconds if none selected
-		if (runners.length > 0 && !localSelectedRunner && !storeSelectedRunner) {
+		if (
+			runners.length > 0 &&
+			!localSelectedRunner &&
+			!storeSelectedRunner
+		) {
 			setIsAutoSelecting(true);
 			const timer = setTimeout(() => {
 				selectRunner(runners[0]);
@@ -70,118 +80,125 @@ export default function RunnerSelectionScreen() {
 	const handleContinue = () => {
 		if (localSelectedRunner) {
 			setCurrentStep('final_confirmation');
-			router.push('/(screens)/errand/confirmation');
+			router.push('/confirmation');
 		}
 	};
 
 	return (
-		<SafeAreaView
-			style={[styles.container, { backgroundColor: colors.background }]}
-		>
-			<ScrollView
-				style={styles.scrollView}
-				contentContainerStyle={styles.scrollContent}
-				showsVerticalScrollIndicator={false}
-			>
-				{/* Header */}
-				<View style={styles.header}>
-					<Title>{taskTitle}</Title>
-					<Subtitle color={colors.textSecondary} style={styles.subtitle}>
-						Choose your runner
-					</Subtitle>
+		<SafeAreaView spaced scrollable>
+			{/* Header */}
+			<View className="mb-8">
+				<Title>{taskTitle}</Title>
+				<Subtitle
+					color={colors.textSecondary}
+					className="text-base leading-6 mt-2"
+				>
+					Choose your runner
+				</Subtitle>
+			</View>
+
+			{/* Loading State */}
+			{loading && (
+				<View className="items-center py-16">
+					<LoadingSpinner />
+					<Text
+						className="text-base mt-4"
+						style={{ color: colors.textSecondary }}
+					>
+						Finding available runners nearby...
+					</Text>
 				</View>
+			)}
 
-				{/* Loading State */}
-				{loading && (
-					<View style={styles.loadingContainer}>
-						<LoadingSpinner />
-						<Text style={[styles.loadingText, { color: colors.textSecondary }]}>
-							Finding available runners nearby...
-						</Text>
-					</View>
-				)}
-
-				{/* Auto-selecting Banner */}
-				{isAutoSelecting && !loading && (
-					<View
-						style={[
-							styles.autoSelectBanner,
-							{
-								backgroundColor: colors.primary + '15',
-								borderColor: colors.primary + '30',
-							},
-						]}
+			{/* Auto-selecting Banner */}
+			{isAutoSelecting && !loading && (
+				<View
+					className="flex-row items-center p-4 rounded-xl border mb-4"
+					style={{
+						backgroundColor: colors.primary + '15',
+						borderColor: colors.primary + '30',
+					}}
+				>
+					<ActivityIndicator size="small" color={colors.primary} />
+					<Text
+						className="text-sm font-medium ml-2"
+						style={{ color: colors.primary }}
 					>
-						<ActivityIndicator size="small" color={colors.primary} />
-						<Text style={[styles.autoSelectText, { color: colors.primary }]}>
-							Auto-selecting closest runner...
-						</Text>
-					</View>
-				)}
+						Auto-selecting closest runner...
+					</Text>
+				</View>
+			)}
 
-				{/* Runners List */}
-				{!loading && runners.length > 0 && (
-					<Section>
-						<Text style={[styles.sectionTitle, { color: colors.text }]}>
-							Available Runners ({runners.length})
-						</Text>
-						{runners.map((runner) => (
-							<RunnerCard
-								key={runner.id}
-								runner={runner}
-								onSelect={handleSelectRunner}
-								selected={
-									localSelectedRunner?.id === runner.id ||
-									storeSelectedRunner?.id === runner.id
-								}
-							/>
-						))}
-					</Section>
-				)}
-
-				{/* Empty State */}
-				{!loading && runners.length === 0 && (
-					<View style={styles.emptyContainer}>
-						<Text style={styles.emptyIcon}>🔍</Text>
-						<Text style={[styles.emptyTitle, { color: colors.text }]}>
-							No Runners Available
-						</Text>
-						<Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-							There are no runners available in your area at the moment. Please
-							try again later.
-						</Text>
-					</View>
-				)}
-
-				{/* Info Box */}
-				{runners.length > 0 && (
-					<View
-						style={[
-							styles.infoBox,
-							{
-								backgroundColor: colors.primary + '10',
-								borderColor: colors.primary + '30',
-							},
-						]}
+			{/* Runners List */}
+			{!loading && runners.length > 0 && (
+				<Section>
+					<Text
+						className="text-base font-semibold mb-4"
+						style={{ color: colors.text }}
 					>
-						<Text style={styles.infoIcon}>💡</Text>
-						<Text style={[styles.infoText, { color: colors.text }]}>
-							Runner will be notified immediately after confirmation
-						</Text>
-					</View>
-				)}
-			</ScrollView>
+						Available Runners ({runners.length})
+					</Text>
+					{runners.map((runner) => (
+						<RunnerCard
+							key={runner.id}
+							runner={runner}
+							onSelect={handleSelectRunner}
+							selected={
+								localSelectedRunner?.id === runner.id ||
+								storeSelectedRunner?.id === runner.id
+							}
+						/>
+					))}
+				</Section>
+			)}
+
+			{/* Empty State */}
+			{!loading && runners.length === 0 && (
+				<View className="items-center py-16">
+					<Text className="text-6xl mb-4">🔍</Text>
+					<Text
+						className="text-xl font-bold mb-2"
+						style={{ color: colors.text }}
+					>
+						No Runners Available
+					</Text>
+					<Text
+						className="text-base text-center leading-6 px-8"
+						style={{ color: colors.textSecondary }}
+					>
+						There are no runners available in your area at the
+						moment. Please try again later.
+					</Text>
+				</View>
+			)}
+
+			{/* Info Box */}
+			{runners.length > 0 && (
+				<View
+					className="flex-row p-4 rounded-xl border items-center"
+					style={{
+						backgroundColor: colors.primary + '10',
+						borderColor: colors.primary + '30',
+					}}
+				>
+					<Text className="text-xl mr-2">💡</Text>
+					<Text
+						className="flex-1 text-sm leading-5"
+						style={{ color: colors.text }}
+					>
+						Runner will be notified immediately after confirmation
+					</Text>
+				</View>
+			)}
 
 			{/* Bottom Button */}
 			{!loading && runners.length > 0 && (
 				<View
-					style={[
-						styles.bottomContainer,
-						{
-							backgroundColor: colors.background,
-							borderTopColor: colors.border,
-						},
-					]}
+					className="p-4 border-t mt-8"
+					style={{
+						backgroundColor: colors.background,
+						borderTopColor: colors.border,
+					}}
 				>
 					<Button
 						title="Continue to Confirmation"
@@ -196,89 +213,90 @@ export default function RunnerSelectionScreen() {
 	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-	scrollView: {
-		flex: 1,
-	},
-	scrollContent: {
-		paddingHorizontal: Spacing.lg,
-		paddingTop: Spacing.lg,
-		paddingBottom: Spacing.xl * 2,
-	},
-	header: {
-		marginBottom: Spacing.xl,
-	},
-	subtitle: {
-		fontSize: FontSizes.md,
-		lineHeight: 22,
-		marginTop: Spacing.sm,
-	},
-	loadingContainer: {
-		alignItems: 'center',
-		paddingVertical: Spacing.xl * 2,
-	},
-	loadingText: {
-		fontSize: FontSizes.md,
-		marginTop: Spacing.md,
-	},
-	autoSelectBanner: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		padding: Spacing.md,
-		borderRadius: 12,
-		borderWidth: 1,
-		marginBottom: Spacing.lg,
-	},
-	autoSelectText: {
-		fontSize: FontSizes.sm,
-		fontWeight: FontWeights.medium,
-		marginLeft: Spacing.sm,
-	},
-	sectionTitle: {
-		fontSize: FontSizes.md,
-		fontWeight: FontWeights.semibold,
-		marginBottom: Spacing.md,
-	},
-	emptyContainer: {
-		alignItems: 'center',
-		paddingVertical: Spacing.xl * 2,
-	},
-	emptyIcon: {
-		fontSize: 64,
-		marginBottom: Spacing.md,
-	},
-	emptyTitle: {
-		fontSize: FontSizes.xl,
-		fontWeight: FontWeights.bold,
-		marginBottom: Spacing.sm,
-	},
-	emptyText: {
-		fontSize: FontSizes.md,
-		textAlign: 'center',
-		lineHeight: 22,
-		paddingHorizontal: Spacing.xl,
-	},
-	infoBox: {
-		flexDirection: 'row',
-		padding: Spacing.md,
-		borderRadius: 12,
-		borderWidth: 1,
-		alignItems: 'center',
-	},
-	infoIcon: {
-		fontSize: 20,
-		marginRight: Spacing.sm,
-	},
-	infoText: {
-		flex: 1,
-		fontSize: FontSizes.sm,
-		lineHeight: 20,
-	},
-	bottomContainer: {
-		padding: Spacing.lg,
-		borderTopWidth: 1,
-	},
-});
+// Unused - replaced with Tailwind classes
+// const styles = StyleSheet.create({
+// 	container: {
+// 		flex: 1,
+// 	},
+// 	scrollView: {
+// 		flex: 1,
+// 	},
+// 	scrollContent: {
+// 		paddingHorizontal: Spacing.lg,
+// 		paddingTop: Spacing.lg,
+// 		paddingBottom: Spacing.xl * 2,
+// 	},
+// 	header: {
+// 		marginBottom: Spacing.xl,
+// 	},
+// 	subtitle: {
+// 		fontSize: FontSizes.md,
+// 		lineHeight: 22,
+// 		marginTop: Spacing.sm,
+// 	},
+// 	loadingContainer: {
+// 		alignItems: 'center',
+// 		paddingVertical: Spacing.xl * 2,
+// 	},
+// 	loadingText: {
+// 		fontSize: FontSizes.md,
+// 		marginTop: Spacing.md,
+// 	},
+// 	autoSelectBanner: {
+// 		flexDirection: 'row',
+// 		alignItems: 'center',
+// 		padding: Spacing.md,
+// 		borderRadius: 12,
+// 		borderWidth: 1,
+// 		marginBottom: Spacing.lg,
+// 	},
+// 	autoSelectText: {
+// 		fontSize: FontSizes.sm,
+// 		fontWeight: FontWeights.medium,
+// 		marginLeft: Spacing.sm,
+// 	},
+// 	sectionTitle: {
+// 		fontSize: FontSizes.md,
+// 		fontWeight: FontWeights.semibold,
+// 		marginBottom: Spacing.md,
+// 	},
+// 	emptyContainer: {
+// 		alignItems: 'center',
+// 		paddingVertical: Spacing.xl * 2,
+// 	},
+// 	emptyIcon: {
+// 		fontSize: 64,
+// 		marginBottom: Spacing.md,
+// 	},
+// 	emptyTitle: {
+// 		fontSize: FontSizes.xl,
+// 		fontWeight: FontWeights.bold,
+// 		marginBottom: Spacing.sm,
+// 	},
+// 	emptyText: {
+// 		fontSize: FontSizes.md,
+// 		textAlign: 'center',
+// 		lineHeight: 22,
+// 		paddingHorizontal: Spacing.xl,
+// 	},
+// 	infoBox: {
+// 		flexDirection: 'row',
+// 		padding: Spacing.md,
+// 		borderRadius: 12,
+// 		borderWidth: 1,
+// 		alignItems: 'center',
+// 	},
+// 	infoIcon: {
+// 		fontSize: 20,
+// 		marginRight: Spacing.sm,
+// 	},
+// 	infoText: {
+// 		flex: 1,
+// 		fontSize: FontSizes.sm,
+// 		lineHeight: 20,
+// 	},
+// 	bottomContainer: {
+// 		padding: Spacing.lg,
+// 		borderTopWidth: 1,
+// 	},
+// });

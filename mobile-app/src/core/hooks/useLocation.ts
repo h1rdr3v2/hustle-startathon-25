@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as ExpoLocation from 'expo-location';
 import type { ErrandLocation, SavedAddress } from '@/src/core/types';
 
@@ -17,7 +17,8 @@ export const useLocation = () => {
 	};
 
 	const requestPermission = async (): Promise<boolean> => {
-		const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
+		const { status } =
+			await ExpoLocation.requestForegroundPermissionsAsync();
 		const granted = status === 'granted';
 		setHasPermission(granted);
 		return granted;
@@ -49,13 +50,15 @@ export const useLocation = () => {
 			const errandLocation: ErrandLocation = {
 				latitude: location.coords.latitude,
 				longitude: location.coords.longitude,
-				address: `${addressResult.street || ''}, ${addressResult.name || ''}`.trim(),
+				address:
+					`${addressResult.street || ''}, ${addressResult.name || ''}`.trim(),
 				city: addressResult.city || 'Unknown',
 			};
 
 			return errandLocation;
 		} catch (err) {
-			const message = err instanceof Error ? err.message : 'Failed to get location';
+			const message =
+				err instanceof Error ? err.message : 'Failed to get location';
 			setError(message);
 			return null;
 		} finally {
@@ -63,20 +66,22 @@ export const useLocation = () => {
 		}
 	};
 
-	const geocodeAddress = async (address: string): Promise<ErrandLocation | null> => {
+	const geocodeAddress = async (
+		address: string,
+	): Promise<ErrandLocation | null> => {
 		try {
 			setLoading(true);
 			setError(null);
 
 			const results = await ExpoLocation.geocodeAsync(address);
-			
+
 			if (results.length === 0) {
 				setError('Address not found');
 				return null;
 			}
 
 			const result = results[0];
-			
+
 			const errandLocation: ErrandLocation = {
 				latitude: result.latitude,
 				longitude: result.longitude,
@@ -86,7 +91,10 @@ export const useLocation = () => {
 
 			return errandLocation;
 		} catch (err) {
-			const message = err instanceof Error ? err.message : 'Failed to geocode address';
+			const message =
+				err instanceof Error
+					? err.message
+					: 'Failed to geocode address';
 			setError(message);
 			return null;
 		} finally {
@@ -96,19 +104,22 @@ export const useLocation = () => {
 
 	const calculateDistance = (
 		from: ErrandLocation,
-		to: ErrandLocation
+		to: ErrandLocation,
 	): number => {
 		// Haversine formula to calculate distance between two points
 		const R = 6371; // Earth's radius in km
 		const dLat = toRad(to.latitude - from.latitude);
 		const dLon = toRad(to.longitude - from.longitude);
-		
+
 		const lat1 = toRad(from.latitude);
 		const lat2 = toRad(to.latitude);
 
 		const a =
 			Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-			Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+			Math.sin(dLon / 2) *
+				Math.sin(dLon / 2) *
+				Math.cos(lat1) *
+				Math.cos(lat2);
 		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		const distance = R * c;
 
@@ -146,8 +157,8 @@ export const useSavedAddresses = () => {
 		{
 			id: '2',
 			userId: 'user-1',
-			latitude: 5.5250,
-			longitude: 7.4900,
+			latitude: 5.525,
+			longitude: 7.49,
 			address: '45 Ikot Ekpene Road',
 			city: 'Umuahia',
 			label: 'Work',

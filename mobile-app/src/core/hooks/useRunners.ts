@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { mockGetAvailableRunners, mockGetAllRunners } from '@/src/core/api';
-import { Runner, SelectedRunner, ErrandLocation } from '@/src/core/types';
+import { mockGetAllRunners, mockGetAvailableRunners } from '@/src/core/api';
+import { ErrandLocation, Runner, SelectedRunner } from '@/src/core/types';
 
 export const useAvailableRunners = () => {
 	return useQuery<Runner[]>({
@@ -66,10 +66,15 @@ interface UseErrandRunnersParams {
 	autoSelect?: boolean;
 }
 
-export const useErrandRunners = ({ pickupLocation, autoSelect = false }: UseErrandRunnersParams) => {
+export const useErrandRunners = ({
+	pickupLocation,
+	autoSelect = false,
+}: UseErrandRunnersParams) => {
 	const [runners, setRunners] = useState<SelectedRunner[]>([]);
 	const [loading, setLoading] = useState(false);
-	const [selectedRunner, setSelectedRunner] = useState<SelectedRunner | null>(null);
+	const [selectedRunner, setSelectedRunner] = useState<SelectedRunner | null>(
+		null,
+	);
 
 	useEffect(() => {
 		if (pickupLocation) {
@@ -80,15 +85,17 @@ export const useErrandRunners = ({ pickupLocation, autoSelect = false }: UseErra
 	const fetchNearbyRunners = async () => {
 		try {
 			setLoading(true);
-			
+
 			// Simulate API call delay
-			await new Promise(resolve => setTimeout(resolve, 800));
-			
+			await new Promise((resolve) => setTimeout(resolve, 800));
+
 			// Sort runners by distance
-			const sortedRunners = [...MOCK_SELECTED_RUNNERS].sort((a, b) => a.distance - b.distance);
-			
+			const sortedRunners = [...MOCK_SELECTED_RUNNERS].sort(
+				(a, b) => a.distance - b.distance,
+			);
+
 			setRunners(sortedRunners);
-			
+
 			// Auto-select closest runner if enabled
 			if (autoSelect && sortedRunners.length > 0) {
 				setSelectedRunner(sortedRunners[0]);

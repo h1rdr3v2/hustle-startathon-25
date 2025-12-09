@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
-	SafeAreaView,
 	Button,
-	Title,
-	Subtitle,
-	Section,
 	PriceCard,
+	SafeAreaView,
+	Section,
+	Subtitle,
+	Title,
 } from '@/src/components/ui';
 import {
 	Colors,
-	Spacing,
 	FontSizes,
 	FontWeights,
 	Radius,
+	Spacing,
 } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
-import { useErrandFlowStore } from '@/src/core/stores/errandFlowStore';
 import { useLocation } from '@/src/core/hooks/useLocation';
 import { usePriceEstimation } from '@/src/core/hooks/usePriceEstimation';
+import { useErrandFlowStore } from '@/src/core/stores/errandFlowStore';
 
 export default function PricePreviewScreen() {
 	const colorScheme = useColorScheme();
@@ -69,7 +69,7 @@ export default function PricePreviewScreen() {
 
 	const handleContinue = () => {
 		setCurrentStep('runner_assignment');
-		router.push('/(screens)/errand/runner-selection');
+		router.push('/runner-selection');
 	};
 
 	const needsItemCost =
@@ -78,152 +78,165 @@ export default function PricePreviewScreen() {
 		taskType === 'run_errand';
 
 	return (
-		<SafeAreaView
-			style={[styles.container, { backgroundColor: colors.background }]}
-		>
-			<ScrollView
-				style={styles.scrollView}
-				contentContainerStyle={styles.scrollContent}
-				showsVerticalScrollIndicator={false}
-			>
-				{/* Header */}
-				<View style={styles.header}>
-					<Title>{taskTitle}</Title>
-					<Subtitle color={colors.textSecondary} style={styles.subtitle}>
-						Review estimated costs
-					</Subtitle>
-				</View>
+		<SafeAreaView spaced scrollable>
+			{/* Header */}
+			<View className="mb-8">
+				<Title>{taskTitle}</Title>
+				<Subtitle
+					color={colors.textSecondary}
+					className="text-base leading-6 mt-2"
+				>
+					Review estimated costs
+				</Subtitle>
+			</View>
 
-				{/* Item Purchase Cost (if applicable) */}
-				{needsItemCost && (
-					<Section>
-						<Text style={[styles.label, { color: colors.text }]}>
-							Estimated Item Cost (Optional)
-						</Text>
-						<Text
-							style={[styles.helperText, { color: colors.textSecondary }]}
-						>
-							Enter the approximate cost of items to be purchased
-						</Text>
-						<View
-							style={[
-								styles.inputContainer,
-								{
-									backgroundColor: colors.card,
-									borderColor: colors.border,
-								},
-							]}
-						>
-							<Text style={[styles.currencySymbol, { color: colors.text }]}>
-								₦
-							</Text>
-							<TextInput
-								style={[styles.input, { color: colors.text }]}
-								value={itemCost}
-								onChangeText={setItemCost}
-								placeholder="0"
-								placeholderTextColor={colors.textSecondary}
-								keyboardType="numeric"
-							/>
-						</View>
-					</Section>
-				)}
-
-				{/* Price Breakdown */}
-				{estimatedPricing && (
-					<Section>
-						<Text style={[styles.label, { color: colors.text }]}>
-							Price Breakdown
-						</Text>
-						<PriceCard pricing={estimatedPricing} showDetails />
-					</Section>
-				)}
-
-				{/* Coupon Code */}
+			{/* Item Purchase Cost (if applicable) */}
+			{needsItemCost && (
 				<Section>
-					<Text style={[styles.label, { color: colors.text }]}>
-						Have a Coupon?
+					<Text
+						className="text-base font-semibold mb-2"
+						style={{ color: colors.text }}
+					>
+						Estimated Item Cost (Optional)
 					</Text>
-					<View style={styles.couponRow}>
+					<Text
+						className="text-sm mb-2"
+						style={{ color: colors.textSecondary }}
+					>
+						Enter the approximate cost of items to be purchased
+					</Text>
+					<View
+						className="flex-row items-center border rounded-2xl px-4"
+						style={{
+							backgroundColor: colors.card,
+							borderColor: colors.border,
+						}}
+					>
+						<Text
+							className="text-lg font-semibold mr-1"
+							style={{ color: colors.text }}
+						>
+							₦
+						</Text>
 						<TextInput
-							style={[
-								styles.couponInput,
-								{
-									backgroundColor: colors.card,
-									borderColor: colors.border,
-									color: colors.text,
-								},
-							]}
-							value={couponInput}
-							onChangeText={(text) => {
-								setCouponInput(text);
-								setCouponApplied(false);
-							}}
-							placeholder="Enter coupon code"
+							className="flex-1 text-lg py-4"
+							style={{ color: colors.text }}
+							value={itemCost}
+							onChangeText={setItemCost}
+							placeholder="0"
 							placeholderTextColor={colors.textSecondary}
-							editable={!couponApplied}
-						/>
-						<Button
-							title={couponApplied ? 'Applied' : 'Apply'}
-							onPress={handleApplyCoupon}
-							size="medium"
-							variant={couponApplied ? 'secondary' : 'primary'}
-							disabled={couponApplied || !couponInput.trim()}
-							style={styles.couponButton}
+							keyboardType="numeric"
 						/>
 					</View>
-					{couponApplied && (
-						<View style={styles.successBadge}>
-							<Text style={styles.successIcon}>✓</Text>
-							<Text style={[styles.successText, { color: '#10B981' }]}>
-								Coupon applied successfully!
-							</Text>
-						</View>
-					)}
 				</Section>
+			)}
 
-				{/* Info Boxes */}
-				<View
-					style={[
-						styles.infoBox,
-						{
-							backgroundColor: colors.primary + '10',
-							borderColor: colors.primary + '30',
-						},
-					]}
-				>
-					<Text style={styles.infoIcon}>💡</Text>
-					<Text style={[styles.infoText, { color: colors.text }]}>
-						Final price may vary based on actual items purchased and distance
-						traveled
+			{/* Price Breakdown */}
+			{estimatedPricing && (
+				<Section>
+					<Text
+						className="text-base font-semibold mb-2"
+						style={{ color: colors.text }}
+					>
+						Price Breakdown
 					</Text>
-				</View>
+					<PriceCard pricing={estimatedPricing} showDetails />
+				</Section>
+			)}
 
-				<View
-					style={[
-						styles.infoBox,
-						{
-							backgroundColor: '#10B981' + '10',
-							borderColor: '#10B981' + '30',
-						},
-					]}
+			{/* Coupon Code */}
+			<Section>
+				<Text
+					className="text-base font-semibold mb-2"
+					style={{ color: colors.text }}
 				>
-					<Text style={styles.infoIcon}>🔒</Text>
-					<Text style={[styles.infoText, { color: colors.text }]}>
-						Payment will be processed after task completion
-					</Text>
+					Have a Coupon?
+				</Text>
+				<View className="flex-row gap-2">
+					<TextInput
+						className="flex-1 border rounded-2xl px-4 py-2 text-base"
+						style={{
+							backgroundColor: colors.card,
+							borderColor: colors.border,
+							color: colors.text,
+						}}
+						value={couponInput}
+						onChangeText={(text) => {
+							setCouponInput(text);
+							setCouponApplied(false);
+						}}
+						placeholder="Enter coupon code"
+						placeholderTextColor={colors.textSecondary}
+						editable={!couponApplied}
+					/>
+					<Button
+						title={couponApplied ? 'Applied' : 'Apply'}
+						onPress={handleApplyCoupon}
+						size="medium"
+						variant={couponApplied ? 'secondary' : 'primary'}
+						disabled={couponApplied || !couponInput.trim()}
+						style={{ minWidth: 90 }}
+					/>
 				</View>
-			</ScrollView>
+				{couponApplied && (
+					<View className="flex-row items-center mt-2">
+						<Text
+							className="text-base mr-1"
+							style={{ color: '#10B981' }}
+						>
+							✓
+						</Text>
+						<Text
+							className="text-sm font-medium"
+							style={{ color: '#10B981' }}
+						>
+							Coupon applied successfully!
+						</Text>
+					</View>
+				)}
+			</Section>
+
+			{/* Info Boxes */}
+			<View
+				className="flex-row p-4 rounded-2xl border items-center mb-4"
+				style={{
+					backgroundColor: colors.primary + '10',
+					borderColor: colors.primary + '30',
+				}}
+			>
+				<Text className="text-xl mr-2">💡</Text>
+				<Text
+					className="flex-1 text-sm leading-5"
+					style={{ color: colors.text }}
+				>
+					Final price may vary based on actual items purchased and
+					distance traveled
+				</Text>
+			</View>
+
+			<View
+				className="flex-row p-4 rounded-2xl border items-center mb-4"
+				style={{
+					backgroundColor: '#10B981' + '10',
+					borderColor: '#10B981' + '30',
+				}}
+			>
+				<Text className="text-xl mr-2">🔒</Text>
+				<Text
+					className="flex-1 text-sm leading-5"
+					style={{ color: colors.text }}
+				>
+					Payment will be processed after task completion
+				</Text>
+			</View>
 
 			{/* Bottom Button */}
 			<View
-				style={[
-					styles.bottomContainer,
-					{
-						backgroundColor: colors.background,
-						borderTopColor: colors.border,
-					},
-				]}
+				className="p-4 border-t mt-8"
+				style={{
+					backgroundColor: colors.background,
+					borderTopColor: colors.border,
+				}}
 			>
 				<Button
 					title="Select Runner"
@@ -237,100 +250,101 @@ export default function PricePreviewScreen() {
 	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-	scrollView: {
-		flex: 1,
-	},
-	scrollContent: {
-		paddingHorizontal: Spacing.lg,
-		paddingTop: Spacing.lg,
-		paddingBottom: Spacing.xl * 2,
-	},
-	header: {
-		marginBottom: Spacing.xl,
-	},
-	subtitle: {
-		fontSize: FontSizes.md,
-		lineHeight: 22,
-		marginTop: Spacing.sm,
-	},
-	label: {
-		fontSize: FontSizes.md,
-		fontWeight: FontWeights.semibold,
-		marginBottom: Spacing.sm,
-	},
-	helperText: {
-		fontSize: FontSizes.sm,
-		marginBottom: Spacing.sm,
-	},
-	inputContainer: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		borderWidth: 1,
-		borderRadius: Radius.md,
-		paddingHorizontal: Spacing.md,
-	},
-	currencySymbol: {
-		fontSize: FontSizes.lg,
-		fontWeight: FontWeights.semibold,
-		marginRight: Spacing.xs,
-	},
-	input: {
-		flex: 1,
-		fontSize: FontSizes.lg,
-		paddingVertical: Spacing.md,
-	},
-	couponRow: {
-		flexDirection: 'row',
-		gap: Spacing.sm,
-	},
-	couponInput: {
-		flex: 1,
-		borderWidth: 1,
-		borderRadius: Radius.md,
-		paddingHorizontal: Spacing.md,
-		paddingVertical: Spacing.sm,
-		fontSize: FontSizes.md,
-	},
-	couponButton: {
-		minWidth: 90,
-	},
-	successBadge: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		marginTop: Spacing.sm,
-	},
-	successIcon: {
-		fontSize: 16,
-		color: '#10B981',
-		marginRight: Spacing.xs,
-	},
-	successText: {
-		fontSize: FontSizes.sm,
-		fontWeight: FontWeights.medium,
-	},
-	infoBox: {
-		flexDirection: 'row',
-		padding: Spacing.md,
-		borderRadius: Radius.md,
-		borderWidth: 1,
-		alignItems: 'center',
-		marginBottom: Spacing.md,
-	},
-	infoIcon: {
-		fontSize: 20,
-		marginRight: Spacing.sm,
-	},
-	infoText: {
-		flex: 1,
-		fontSize: FontSizes.sm,
-		lineHeight: 20,
-	},
-	bottomContainer: {
-		padding: Spacing.lg,
-		borderTopWidth: 1,
-	},
-});
+// Unused - replaced with Tailwind classes
+// const styles = StyleSheet.create({
+// 	container: {
+// 		flex: 1,
+// 	},
+// 	scrollView: {
+// 		flex: 1,
+// 	},
+// 	scrollContent: {
+// 		paddingHorizontal: Spacing.lg,
+// 		paddingTop: Spacing.lg,
+// 		paddingBottom: Spacing.xl * 2,
+// 	},
+// 	header: {
+// 		marginBottom: Spacing.xl,
+// 	},
+// 	subtitle: {
+// 		fontSize: FontSizes.md,
+// 		lineHeight: 22,
+// 		marginTop: Spacing.sm,
+// 	},
+// 	label: {
+// 		fontSize: FontSizes.md,
+// 		fontWeight: FontWeights.semibold,
+// 		marginBottom: Spacing.sm,
+// 	},
+// 	helperText: {
+// 		fontSize: FontSizes.sm,
+// 		marginBottom: Spacing.sm,
+// 	},
+// 	inputContainer: {
+// 		flexDirection: 'row',
+// 		alignItems: 'center',
+// 		borderWidth: 1,
+// 		borderRadius: Radius.md,
+// 		paddingHorizontal: Spacing.md,
+// 	},
+// 	currencySymbol: {
+// 		fontSize: FontSizes.lg,
+// 		fontWeight: FontWeights.semibold,
+// 		marginRight: Spacing.xs,
+// 	},
+// 	input: {
+// 		flex: 1,
+// 		fontSize: FontSizes.lg,
+// 		paddingVertical: Spacing.md,
+// 	},
+// 	couponRow: {
+// 		flexDirection: 'row',
+// 		gap: Spacing.sm,
+// 	},
+// 	couponInput: {
+// 		flex: 1,
+// 		borderWidth: 1,
+// 		borderRadius: Radius.md,
+// 		paddingHorizontal: Spacing.md,
+// 		paddingVertical: Spacing.sm,
+// 		fontSize: FontSizes.md,
+// 	},
+// 	couponButton: {
+// 		minWidth: 90,
+// 	},
+// 	successBadge: {
+// 		flexDirection: 'row',
+// 		alignItems: 'center',
+// 		marginTop: Spacing.sm,
+// 	},
+// 	successIcon: {
+// 		fontSize: 16,
+// 		color: '#10B981',
+// 		marginRight: Spacing.xs,
+// 	},
+// 	successText: {
+// 		fontSize: FontSizes.sm,
+// 		fontWeight: FontWeights.medium,
+// 	},
+// 	infoBox: {
+// 		flexDirection: 'row',
+// 		padding: Spacing.md,
+// 		borderRadius: Radius.md,
+// 		borderWidth: 1,
+// 		alignItems: 'center',
+// 		marginBottom: Spacing.md,
+// 	},
+// 	infoIcon: {
+// 		fontSize: 20,
+// 		marginRight: Spacing.sm,
+// 	},
+// 	infoText: {
+// 		flex: 1,
+// 		fontSize: FontSizes.sm,
+// 		lineHeight: 20,
+// 	},
+// 	bottomContainer: {
+// 		padding: Spacing.lg,
+// 		borderTopWidth: 1,
+// 	},
+// });

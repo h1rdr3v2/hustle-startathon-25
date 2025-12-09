@@ -1,19 +1,19 @@
 import React from 'react';
 import {
 	Modal,
-	View,
+	Pressable,
+	StyleSheet,
 	Text,
 	TouchableOpacity,
-	StyleSheet,
-	Pressable,
+	View,
 } from 'react-native';
 import {
 	Colors,
-	Spacing,
-	Radius,
 	FontSizes,
 	FontWeights,
+	Radius,
 	Shadows,
+	Spacing,
 } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import { Button } from './Button';
@@ -61,8 +61,15 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
 						]}
 						onPress={(e) => e.stopPropagation()}
 					>
-						<Text style={[styles.title, { color: colors.text }]}>{title}</Text>
-						<Text style={[styles.message, { color: colors.textSecondary }]}>
+						<Text style={[styles.title, { color: colors.text }]}>
+							{title}
+						</Text>
+						<Text
+							style={[
+								styles.message,
+								{ color: colors.textSecondary },
+							]}
+						>
 							{message}
 						</Text>
 

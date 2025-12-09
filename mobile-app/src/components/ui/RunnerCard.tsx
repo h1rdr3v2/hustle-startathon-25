@@ -1,19 +1,19 @@
 import React from 'react';
 import {
-	View,
+	FlatList,
+	Image,
+	StyleSheet,
 	Text,
 	TouchableOpacity,
-	StyleSheet,
-	Image,
-	FlatList,
+	View,
 } from 'react-native';
 import {
 	Colors,
-	Spacing,
-	Radius,
 	FontSizes,
 	FontWeights,
+	Radius,
 	Shadows,
+	Spacing,
 } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import type { SelectedRunner } from '@/src/core/types';
@@ -77,20 +77,32 @@ export const RunnerCard: React.FC<RunnerCardProps> = ({
 				<View style={styles.statsRow}>
 					<View style={styles.stat}>
 						<Text style={styles.statIcon}>⭐</Text>
-						<Text style={[styles.statText, { color: colors.textSecondary }]}>
+						<Text
+							style={[
+								styles.statText,
+								{ color: colors.textSecondary },
+							]}
+						>
 							{runner.rating.toFixed(1)}
 						</Text>
 					</View>
 					<View style={styles.stat}>
 						<Text style={styles.statIcon}>📦</Text>
-						<Text style={[styles.statText, { color: colors.textSecondary }]}>
+						<Text
+							style={[
+								styles.statText,
+								{ color: colors.textSecondary },
+							]}
+						>
 							{runner.totalDeliveries} deliveries
 						</Text>
 					</View>
 				</View>
 
 				<View style={styles.detailsRow}>
-					<Text style={[styles.detail, { color: colors.textSecondary }]}>
+					<Text
+						style={[styles.detail, { color: colors.textSecondary }]}
+					>
 						{runner.distance.toFixed(1)} km away
 					</Text>
 					<Text style={[styles.detail, { color: colors.primary }]}>

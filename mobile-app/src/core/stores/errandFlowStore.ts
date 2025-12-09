@@ -2,13 +2,13 @@ import { create } from 'zustand';
 import type {
 	ErrandFlowState,
 	ErrandFlowStep,
-	ErrandTaskType,
 	ErrandLocation,
-	ErrandTaskDetails,
 	ErrandPricing,
-	SelectedRunner,
-	PaymentMethod,
 	ErrandStatus,
+	ErrandTaskDetails,
+	ErrandTaskType,
+	PaymentMethod,
+	SelectedRunner,
 } from '@/src/core/types';
 
 interface ErrandFlowStore extends ErrandFlowState {
@@ -55,23 +55,23 @@ export const useErrandFlowStore = create<ErrandFlowStore>((set, get) => ({
 	...initialState,
 
 	setTaskType: (taskType) => set({ taskType }),
-	
+
 	setPickupLocation: (location) => set({ pickupLocation: location }),
-	
+
 	setDeliveryLocation: (location) => set({ deliveryLocation: location }),
-	
+
 	setTaskDetails: (details) => set({ taskDetails: details }),
-	
+
 	setPricing: (pricing) => set({ pricing }),
-	
+
 	setSelectedRunner: (runner) => set({ selectedRunner: runner }),
-	
+
 	setPaymentMethod: (method) => set({ paymentMethod: method }),
-	
+
 	setCouponCode: (code) => set({ couponCode: code }),
-	
+
 	setCurrentStep: (step) => set({ currentStep: step }),
-	
+
 	setStatus: (status) => set({ status }),
 
 	nextStep: () => {

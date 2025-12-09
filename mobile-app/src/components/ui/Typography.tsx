@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TextStyle, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TextStyle } from 'react-native';
 import {
 	Colors,
 	FontSizes,
@@ -13,6 +13,7 @@ interface TypographyProps {
 	color?: string;
 	align?: 'left' | 'center' | 'right' | 'justify';
 	style?: TextStyle;
+	className?: string;
 	numberOfLines?: number;
 }
 
@@ -21,6 +22,7 @@ export const Title: React.FC<TypographyProps> = ({
 	color,
 	align = 'left',
 	style,
+	className,
 	numberOfLines,
 }) => {
 	const colorScheme = useColorScheme();
@@ -28,6 +30,7 @@ export const Title: React.FC<TypographyProps> = ({
 
 	return (
 		<Text
+			className={className}
 			style={[
 				styles.title,
 				{
@@ -48,6 +51,7 @@ export const Subtitle: React.FC<TypographyProps> = ({
 	color,
 	align = 'left',
 	style,
+	className,
 	numberOfLines,
 }) => {
 	const colorScheme = useColorScheme();
@@ -55,6 +59,7 @@ export const Subtitle: React.FC<TypographyProps> = ({
 
 	return (
 		<Text
+			className={className}
 			style={[
 				styles.subtitle,
 				{
@@ -75,6 +80,7 @@ export const BodyText: React.FC<TypographyProps> = ({
 	color,
 	align = 'left',
 	style,
+	className,
 	numberOfLines,
 }) => {
 	const colorScheme = useColorScheme();
@@ -82,6 +88,7 @@ export const BodyText: React.FC<TypographyProps> = ({
 
 	return (
 		<Text
+			className={className}
 			style={[
 				styles.body,
 				{
@@ -102,6 +109,7 @@ export const Caption: React.FC<TypographyProps> = ({
 	color,
 	align = 'left',
 	style,
+	className,
 	numberOfLines,
 }) => {
 	const colorScheme = useColorScheme();
@@ -109,6 +117,7 @@ export const Caption: React.FC<TypographyProps> = ({
 
 	return (
 		<Text
+			className={className}
 			style={[
 				styles.caption,
 				{
@@ -129,6 +138,7 @@ export const Label: React.FC<TypographyProps> = ({
 	color,
 	align = 'left',
 	style,
+	className,
 	numberOfLines,
 }) => {
 	const colorScheme = useColorScheme();
@@ -136,6 +146,7 @@ export const Label: React.FC<TypographyProps> = ({
 
 	return (
 		<Text
+			className={className}
 			style={[
 				styles.label,
 				{

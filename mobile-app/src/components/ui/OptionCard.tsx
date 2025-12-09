@@ -1,18 +1,18 @@
 import React from 'react';
 import {
+	StyleSheet,
+	Text,
 	TouchableOpacity,
 	View,
-	Text,
-	StyleSheet,
 	ViewStyle,
 } from 'react-native';
 import {
 	Colors,
-	Spacing,
-	Radius,
 	FontSizes,
 	FontWeights,
+	Radius,
 	Shadows,
+	Spacing,
 } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 
@@ -53,7 +53,12 @@ export const OptionCard: React.FC<OptionCardProps> = ({
 			onPress={onPress}
 			activeOpacity={0.7}
 		>
-			<View style={[styles.iconContainer, { backgroundColor: color + '20' }]}>
+			<View
+				style={[
+					styles.iconContainer,
+					{ backgroundColor: color + '20' },
+				]}
+			>
 				<Text style={styles.icon}>{icon}</Text>
 			</View>
 			<View style={styles.content}>

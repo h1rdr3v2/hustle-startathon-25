@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import {
 	Colors,
-	Spacing,
-	Radius,
 	FontSizes,
 	FontWeights,
+	Radius,
 	Shadows,
+	Spacing,
 } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
-import { formatCurrency } from '@/src/core/utils/helpers';
 import type { ErrandPricing } from '@/src/core/types';
+import { formatCurrency } from '@/src/core/utils/helpers';
 
 interface PriceCardProps {
 	pricing: ErrandPricing;
@@ -74,14 +74,26 @@ export const PriceCard: React.FC<PriceCardProps> = ({
 							amount={pricing.itemPurchaseCost}
 						/>
 					)}
-					<PriceRow label="Platform Fee" amount={pricing.platformFee} />
+					<PriceRow
+						label="Platform Fee"
+						amount={pricing.platformFee}
+					/>
 					{pricing.discount > 0 && (
 						<PriceRow label="Discount" amount={-pricing.discount} />
 					)}
-					<View style={[styles.divider, { backgroundColor: colors.border }]} />
+					<View
+						style={[
+							styles.divider,
+							{ backgroundColor: colors.border },
+						]}
+					/>
 				</>
 			)}
-			<PriceRow label="Total Amount" amount={pricing.totalAmount} isTotal />
+			<PriceRow
+				label="Total Amount"
+				amount={pricing.totalAmount}
+				isTotal
+			/>
 		</View>
 	);
 };

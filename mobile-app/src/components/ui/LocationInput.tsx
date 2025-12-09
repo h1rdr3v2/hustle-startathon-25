@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import {
-	View,
+	ActivityIndicator,
+	StyleSheet,
 	Text,
 	TouchableOpacity,
-	StyleSheet,
-	ActivityIndicator,
+	View,
 } from 'react-native';
 import {
 	Colors,
-	Spacing,
-	Radius,
 	FontSizes,
 	FontWeights,
+	Radius,
 	Shadows,
+	Spacing,
 } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import type { ErrandLocation } from '@/src/core/types';
@@ -59,20 +59,31 @@ export const LocationInput: React.FC<LocationInputProps> = ({
 						{location ? (
 							<>
 								<Text
-									style={[styles.address, { color: colors.text }]}
+									style={[
+										styles.address,
+										{ color: colors.text },
+									]}
 									numberOfLines={1}
 								>
 									{location.address}
 								</Text>
 								<Text
-									style={[styles.city, { color: colors.textSecondary }]}
+									style={[
+										styles.city,
+										{ color: colors.textSecondary },
+									]}
 									numberOfLines={1}
 								>
 									{location.city}
 								</Text>
 							</>
 						) : (
-							<Text style={[styles.placeholder, { color: colors.textSecondary }]}>
+							<Text
+								style={[
+									styles.placeholder,
+									{ color: colors.textSecondary },
+								]}
+							>
 								Tap to select location
 							</Text>
 						)}
@@ -90,11 +101,19 @@ export const LocationInput: React.FC<LocationInputProps> = ({
 					disabled={loading}
 				>
 					{loading ? (
-						<ActivityIndicator size="small" color={colors.primary} />
+						<ActivityIndicator
+							size="small"
+							color={colors.primary}
+						/>
 					) : (
 						<>
 							<Text style={styles.detectIcon}>📡</Text>
-							<Text style={[styles.detectText, { color: colors.primary }]}>
+							<Text
+								style={[
+									styles.detectText,
+									{ color: colors.primary },
+								]}
+							>
 								Detect Current Location
 							</Text>
 						</>
@@ -102,7 +121,11 @@ export const LocationInput: React.FC<LocationInputProps> = ({
 				</TouchableOpacity>
 			)}
 
-			{error && <Text style={[styles.error, { color: colors.error }]}>{error}</Text>}
+			{error && (
+				<Text style={[styles.error, { color: colors.error }]}>
+					{error}
+				</Text>
+			)}
 		</View>
 	);
 };

@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import {
-	View,
-	Text,
-	StyleSheet,
 	ScrollView,
+	StyleSheet,
+	Text,
 	TextInput,
 	TouchableOpacity,
+	View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
-	SafeAreaView,
 	Button,
-	Title,
-	Subtitle,
-	Section,
 	Input,
+	SafeAreaView,
+	Section,
+	Subtitle,
+	Title,
 } from '@/src/components/ui';
 import {
 	Colors,
-	Spacing,
 	FontSizes,
 	FontWeights,
 	Radius,
+	Spacing,
 } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import { useErrandFlowStore } from '@/src/core/stores/errandFlowStore';
@@ -34,15 +34,19 @@ export default function TaskDetailsScreen() {
 	const { taskType, taskDetails, setTaskDetails, setCurrentStep } =
 		useErrandFlowStore();
 
-	const [description, setDescription] = useState(taskDetails?.description || '');
+	const [description, setDescription] = useState(
+		taskDetails?.description || '',
+	);
 	const [itemsList, setItemsList] = useState(
-		taskDetails?.items?.join('\n') || ''
+		taskDetails?.items?.join('\n') || '',
 	);
 	const [specialInstructions, setSpecialInstructions] = useState(
-		taskDetails?.specialInstructions || ''
+		taskDetails?.specialInstructions || '',
 	);
 	const [scheduleNow, setScheduleNow] = useState(true);
-	const [descriptionError, setDescriptionError] = useState<string | null>(null);
+	const [descriptionError, setDescriptionError] = useState<string | null>(
+		null,
+	);
 
 	const taskTitle = taskType
 		? taskType.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
@@ -67,202 +71,199 @@ export default function TaskDetailsScreen() {
 		});
 
 		setCurrentStep('price_preview');
-		router.push('/(screens)/errand/price-preview');
+		router.push('/price-preview');
 	};
 
 	return (
-		<SafeAreaView
-			style={[styles.container, { backgroundColor: colors.background }]}
-		>
-			<ScrollView
-				style={styles.scrollView}
-				contentContainerStyle={styles.scrollContent}
-				showsVerticalScrollIndicator={false}
-			>
-				{/* Header */}
-				<View style={styles.header}>
-					<Title>{taskTitle}</Title>
-					<Subtitle color={colors.textSecondary} style={styles.subtitle}>
-						Tell us what you need
-					</Subtitle>
-				</View>
-
-				{/* Description */}
-				<Section>
-					<Text style={[styles.label, { color: colors.text }]}>
-						Task Description *
-					</Text>
-					<TextInput
-						style={[
-							styles.textArea,
-							{
-								backgroundColor: colors.card,
-								borderColor: descriptionError
-									? colors.error
-									: colors.border,
-								color: colors.text,
-							},
-						]}
-						value={description}
-						onChangeText={(text) => {
-							setDescription(text);
-							setDescriptionError(null);
-						}}
-						placeholder="Describe what you need help with..."
-						placeholderTextColor={colors.textSecondary}
-						multiline
-						numberOfLines={4}
-						textAlignVertical="top"
-					/>
-					{descriptionError && (
-						<Text style={[styles.errorText, { color: colors.error }]}>
-							{descriptionError}
-						</Text>
-					)}
-				</Section>
-
-				{/* Items List (Optional) */}
-				{(taskType === 'buy_food' ||
-					taskType === 'make_purchase' ||
-					taskType === 'run_errand') && (
-					<Section>
-						<Text style={[styles.label, { color: colors.text }]}>
-							Items Needed (Optional)
-						</Text>
-						<Text
-							style={[
-								styles.helperText,
-								{ color: colors.textSecondary },
-							]}
-						>
-							One item per line
-						</Text>
-						<TextInput
-							style={[
-								styles.textArea,
-								{
-									backgroundColor: colors.card,
-									borderColor: colors.border,
-									color: colors.text,
-								},
-							]}
-							value={itemsList}
-							onChangeText={setItemsList}
-							placeholder="e.g., Rice&#10;Tomatoes&#10;Cooking oil"
-							placeholderTextColor={colors.textSecondary}
-							multiline
-							numberOfLines={5}
-							textAlignVertical="top"
-						/>
-					</Section>
-				)}
-
-				{/* Special Instructions */}
-				<Section>
-					<Text style={[styles.label, { color: colors.text }]}>
-						Special Instructions (Optional)
-					</Text>
-					<TextInput
-						style={[
-							styles.textArea,
-							{
-								backgroundColor: colors.card,
-								borderColor: colors.border,
-								color: colors.text,
-							},
-						]}
-						value={specialInstructions}
-						onChangeText={setSpecialInstructions}
-						placeholder="Any special requirements or preferences..."
-						placeholderTextColor={colors.textSecondary}
-						multiline
-						numberOfLines={3}
-						textAlignVertical="top"
-					/>
-				</Section>
-
-				{/* Schedule Options */}
-				<Section>
-					<Text style={[styles.label, { color: colors.text }]}>
-						When do you need this?
-					</Text>
-					<View style={styles.scheduleOptions}>
-						<TouchableOpacity
-							style={[
-								styles.scheduleOption,
-								{
-									backgroundColor: scheduleNow
-										? colors.primary
-										: colors.card,
-									borderColor: scheduleNow
-										? colors.primary
-										: colors.border,
-								},
-							]}
-							onPress={() => setScheduleNow(true)}
-						>
-							<Text
-								style={[
-									styles.scheduleOptionText,
-									{ color: scheduleNow ? '#FFFFFF' : colors.text },
-								]}
-							>
-								Now
-							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							style={[
-								styles.scheduleOption,
-								{
-									backgroundColor: !scheduleNow
-										? colors.primary
-										: colors.card,
-									borderColor: !scheduleNow
-										? colors.primary
-										: colors.border,
-								},
-							]}
-							onPress={() => setScheduleNow(false)}
-						>
-							<Text
-								style={[
-									styles.scheduleOptionText,
-									{ color: !scheduleNow ? '#FFFFFF' : colors.text },
-								]}
-							>
-								Schedule Later
-							</Text>
-						</TouchableOpacity>
-					</View>
-				</Section>
-
-				{/* Info Box */}
-				<View
-					style={[
-						styles.infoBox,
-						{
-							backgroundColor: colors.primary + '10',
-							borderColor: colors.primary + '30',
-						},
-					]}
+		<SafeAreaView spaced scrollable>
+			{/* Header */}
+			<View className="mb-8">
+				<Title>{taskTitle}</Title>
+				<Subtitle
+					color={colors.textSecondary}
+					className="text-base leading-6 mt-2"
 				>
-					<Text style={styles.infoIcon}>💡</Text>
-					<Text style={[styles.infoText, { color: colors.text }]}>
-						Be as detailed as possible to help your runner complete the task
-						efficiently
+					Tell us what you need
+				</Subtitle>
+			</View>
+
+			{/* Description */}
+			<Section>
+				<Text
+					className="text-base font-semibold mb-2"
+					style={{ color: colors.text }}
+				>
+					Task Description *
+				</Text>
+				<TextInput
+					className="border rounded-2xl p-4 text-base min-h-[100px]"
+					style={{
+						backgroundColor: colors.card,
+						borderColor: descriptionError
+							? colors.error
+							: colors.border,
+						color: colors.text,
+					}}
+					value={description}
+					onChangeText={(text) => {
+						setDescription(text);
+						setDescriptionError(null);
+					}}
+					placeholder="Describe what you need help with..."
+					placeholderTextColor={colors.textSecondary}
+					multiline
+					numberOfLines={4}
+					textAlignVertical="top"
+				/>
+				{descriptionError && (
+					<Text
+						className="text-sm mt-1"
+						style={{ color: colors.error }}
+					>
+						{descriptionError}
 					</Text>
+				)}
+			</Section>
+
+			{/* Items List (Optional) */}
+			{(taskType === 'buy_food' ||
+				taskType === 'make_purchase' ||
+				taskType === 'run_errand') && (
+				<Section>
+					<Text
+						className="text-base font-semibold mb-2"
+						style={{ color: colors.text }}
+					>
+						Items Needed (Optional)
+					</Text>
+					<Text
+						className="text-sm mb-1"
+						style={{ color: colors.textSecondary }}
+					>
+						One item per line
+					</Text>
+					<TextInput
+						className="border rounded-2xl p-4 text-base min-h-[100px]"
+						style={{
+							backgroundColor: colors.card,
+							borderColor: colors.border,
+							color: colors.text,
+						}}
+						value={itemsList}
+						onChangeText={setItemsList}
+						placeholder="e.g., Rice&#10;Tomatoes&#10;Cooking oil"
+						placeholderTextColor={colors.textSecondary}
+						multiline
+						numberOfLines={5}
+						textAlignVertical="top"
+					/>
+				</Section>
+			)}
+
+			{/* Special Instructions */}
+			<Section>
+				<Text
+					className="text-base font-semibold mb-2"
+					style={{ color: colors.text }}
+				>
+					Special Instructions (Optional)
+				</Text>
+				<TextInput
+					className="border rounded-2xl p-4 text-base min-h-[100px]"
+					style={{
+						backgroundColor: colors.card,
+						borderColor: colors.border,
+						color: colors.text,
+					}}
+					value={specialInstructions}
+					onChangeText={setSpecialInstructions}
+					placeholder="Any special requirements or preferences..."
+					placeholderTextColor={colors.textSecondary}
+					multiline
+					numberOfLines={3}
+					textAlignVertical="top"
+				/>
+			</Section>
+
+			{/* Schedule Options */}
+			<Section>
+				<Text
+					className="text-base font-semibold mb-2"
+					style={{ color: colors.text }}
+				>
+					When do you need this?
+				</Text>
+				<View className="flex-row gap-4">
+					<TouchableOpacity
+						className="flex-1 p-4 rounded-2xl border-2 items-center"
+						style={{
+							backgroundColor: scheduleNow
+								? colors.primary
+								: colors.card,
+							borderColor: scheduleNow
+								? colors.primary
+								: colors.border,
+						}}
+						onPress={() => setScheduleNow(true)}
+					>
+						<Text
+							className="text-base font-semibold"
+							style={{
+								color: scheduleNow ? '#FFFFFF' : colors.text,
+							}}
+						>
+							Now
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						className="flex-1 p-4 rounded-2xl border-2 items-center"
+						style={{
+							backgroundColor: !scheduleNow
+								? colors.primary
+								: colors.card,
+							borderColor: !scheduleNow
+								? colors.primary
+								: colors.border,
+						}}
+						onPress={() => setScheduleNow(false)}
+					>
+						<Text
+							className="text-base font-semibold"
+							style={{
+								color: !scheduleNow ? '#FFFFFF' : colors.text,
+							}}
+						>
+							Schedule Later
+						</Text>
+					</TouchableOpacity>
 				</View>
-			</ScrollView>
+			</Section>
+
+			{/* Info Box */}
+			<View
+				className="flex-row p-4 rounded-2xl border items-center"
+				style={{
+					backgroundColor: colors.primary + '10',
+					borderColor: colors.primary + '30',
+				}}
+			>
+				<Text className="text-xl mr-2">💡</Text>
+				<Text
+					className="flex-1 text-sm leading-5"
+					style={{ color: colors.text }}
+				>
+					Be as detailed as possible to help your runner complete the
+					task efficiently
+				</Text>
+			</View>
 
 			{/* Bottom Button */}
 			<View
-				style={[
-					styles.bottomContainer,
-					{
-						backgroundColor: colors.background,
-						borderTopColor: colors.border,
-					},
-				]}
+				className="p-4 border-t mt-8"
+				style={{
+					backgroundColor: colors.background,
+					borderTopColor: colors.border,
+				}}
 			>
 				<Button
 					title="Continue"
@@ -275,80 +276,3 @@ export default function TaskDetailsScreen() {
 		</SafeAreaView>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-	scrollView: {
-		flex: 1,
-	},
-	scrollContent: {
-		paddingHorizontal: Spacing.lg,
-		paddingTop: Spacing.lg,
-		paddingBottom: Spacing.xl * 2,
-	},
-	header: {
-		marginBottom: Spacing.xl,
-	},
-	subtitle: {
-		fontSize: FontSizes.md,
-		lineHeight: 22,
-		marginTop: Spacing.sm,
-	},
-	label: {
-		fontSize: FontSizes.md,
-		fontWeight: FontWeights.semibold,
-		marginBottom: Spacing.sm,
-	},
-	helperText: {
-		fontSize: FontSizes.sm,
-		marginBottom: Spacing.xs,
-	},
-	textArea: {
-		borderWidth: 1,
-		borderRadius: Radius.md,
-		padding: Spacing.md,
-		fontSize: FontSizes.md,
-		minHeight: 100,
-	},
-	errorText: {
-		fontSize: FontSizes.sm,
-		marginTop: Spacing.xs,
-	},
-	scheduleOptions: {
-		flexDirection: 'row',
-		gap: Spacing.md,
-	},
-	scheduleOption: {
-		flex: 1,
-		padding: Spacing.md,
-		borderRadius: Radius.md,
-		borderWidth: 2,
-		alignItems: 'center',
-	},
-	scheduleOptionText: {
-		fontSize: FontSizes.md,
-		fontWeight: FontWeights.semibold,
-	},
-	infoBox: {
-		flexDirection: 'row',
-		padding: Spacing.md,
-		borderRadius: Radius.md,
-		borderWidth: 1,
-		alignItems: 'center',
-	},
-	infoIcon: {
-		fontSize: 20,
-		marginRight: Spacing.sm,
-	},
-	infoText: {
-		flex: 1,
-		fontSize: FontSizes.sm,
-		lineHeight: 20,
-	},
-	bottomContainer: {
-		padding: Spacing.lg,
-		borderTopWidth: 1,
-	},
-});
