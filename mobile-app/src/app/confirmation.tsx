@@ -348,8 +348,8 @@ export default function ConfirmationScreen() {
 				visible={showConfirmModal}
 				title="Confirm Request"
 				message="Are you ready to submit this errand request? Your runner will be notified immediately."
-				confirmText="Yes, Submit"
-				cancelText="Review Again"
+				confirmText="Submit"
+				cancelText="Go Back"
 				onConfirm={handleFinalConfirm}
 				onCancel={() => setShowConfirmModal(false)}
 				loading={isSubmitting}

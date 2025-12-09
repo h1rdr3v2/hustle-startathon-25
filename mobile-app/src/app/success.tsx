@@ -37,9 +37,7 @@ export default function SuccessScreen() {
 	};
 
 	return (
-		<SafeAreaView
-			style={[styles.container, { backgroundColor: colors.background }]}
-		>
+		<SafeAreaView scrollable spaced>
 			<View style={styles.content}>
 				{/* Success Animation/Icon */}
 				<View

@@ -1,9 +1,17 @@
-import { View } from 'react-native';
 import React, { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import {
+	BodyText,
+	Button,
+	Input,
+	SafeAreaView,
+	Title,
+} from '@/src/components/ui';
+import { mockLogin } from '@/src/core/api/authApi';
+import { Colors } from '@/src/core/constants/theme';
+import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import { useAuthStore } from '@/src/core/stores/authStore';
-import { mockLogin, mockSendOTP } from '@/src/core/api/authApi';
-import { Input, Button, Container, Title, BodyText } from '@/src/components/ui';
 
 export default function LoginScreen() {
 	const [email, setEmail] = useState('');
@@ -19,30 +27,25 @@ export default function LoginScreen() {
 
 		if (res.success && res.data) {
 			setAuth(res.data.user, res.data.token);
-			router.replace('/(screens)/(tabs)');
+			router.replace('/');
 		} else {
 			alert(res.error || 'Login failed');
 		}
 	};
 
-	const handleSendOTP = async () => {
-		if (!email) return alert('Enter an email or phone');
-		setLoading(true);
-		const res = await mockSendOTP(email);
-		setLoading(false);
-
-		if (res.success) {
-			router.push('/(auth)/verify-otp');
-		} else {
-			alert(res.error || 'Failed to send OTP');
-		}
-	};
+	const colorScheme = useColorScheme();
+	const colors = Colors[colorScheme ?? 'light'];
 
 	return (
-		<Container>
-			<View style={{ marginTop: 40 }}>
+		<SafeAreaView
+			spaced
+			avoidKeyboard
+			scrollable
+			style={{ backgroundColor: colors.background, paddingInline: 4 }}
+		>
+			<View>
 				<Title>Welcome back</Title>
-				<BodyText style={{ marginTop: 8 }}>
+				<BodyText style={{ marginTop: 8, marginBottom: 12 }}>
 					Login to continue using Hustle
 				</BodyText>
 
@@ -61,20 +64,82 @@ export default function LoginScreen() {
 					onChangeText={setPassword}
 				/>
 
+				<View style={styles.rowBetween}>
+					<Pressable
+						onPress={() =>
+							alert('Forgot password flow not implemented yet')
+						}
+					>
+						<Text
+							style={{
+								color: colors.primary,
+								fontWeight: '600',
+							}}
+						>
+							Forgot password?
+						</Text>
+					</Pressable>
+				</View>
+
 				<Button
 					title="Login"
 					onPress={handleLogin}
 					loading={loading}
 					fullWidth
 				/>
-				<Button
-					title="Login with OTP"
-					onPress={handleSendOTP}
-					variant="outline"
-					fullWidth
-					style={{ marginTop: 12 }}
-				/>
+
+				<View style={{ marginTop: 14 }}>
+					<BodyText align="center" style={{ marginBottom: 10 }}>
+						Or continue with
+					</BodyText>
+					<Button
+						title="Continue with Google"
+						variant="outline"
+						onPress={() => alert('Social login not implemented')}
+						fullWidth
+					/>
+					<View style={{ height: 10 }} />
+					<Button
+						title="Continue with Facebook"
+						variant="outline"
+						onPress={() => alert('Social login not implemented')}
+						fullWidth
+					/>
+				</View>
+
+				<View style={{ marginTop: 18, alignItems: 'center' }}>
+					<BodyText>
+						Don’t have an account?{' '}
+						<Pressable onPress={() => router.push('/signup')}>
+							<Text
+								style={{
+									color: colors.primary,
+									fontWeight: '700',
+								}}
+							>
+								Create one
+							</Text>
+						</Pressable>
+					</BodyText>
+				</View>
 			</View>
-		</Container>
+		</SafeAreaView>
 	);
 }
+
+const styles = StyleSheet.create({
+	outer: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: '100%',
+		paddingHorizontal: 12,
+	},
+	rowBetween: {
+		width: '100%',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		marginVertical: 8,
+	},
+});

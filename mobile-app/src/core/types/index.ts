@@ -17,6 +17,8 @@ export interface User {
 	role: UserRole;
 	profilePicture?: string;
 	location?: Location;
+	// Whether the user has completed KYC verification
+	kycCompleted?: boolean;
 	createdAt: Date;
 }
 

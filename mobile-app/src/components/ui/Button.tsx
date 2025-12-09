@@ -1,19 +1,19 @@
 import React from 'react';
 import {
-	TouchableOpacity,
-	Text,
-	StyleSheet,
 	ActivityIndicator,
-	ViewStyle,
+	StyleSheet,
+	Text,
 	TextStyle,
+	TouchableOpacity,
+	ViewStyle,
 } from 'react-native';
 import {
 	Colors,
-	Spacing,
-	Radius,
 	FontSizes,
 	FontWeights,
+	Radius,
 	Shadows,
+	Spacing,
 } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 
@@ -22,6 +22,7 @@ type ButtonSize = 'small' | 'medium' | 'large';
 
 interface ButtonProps {
 	title: string;
+	className?: string;
 	onPress: () => void;
 	variant?: ButtonVariant;
 	size?: ButtonSize;
@@ -35,6 +36,7 @@ interface ButtonProps {
 
 export const Button: React.FC<ButtonProps> = ({
 	title,
+	className,
 	onPress,
 	variant = 'primary',
 	size = 'medium',
@@ -125,6 +127,7 @@ export const Button: React.FC<ButtonProps> = ({
 
 	return (
 		<TouchableOpacity
+			className={className}
 			style={[getButtonStyle(), disabled && styles.disabled, style]}
 			onPress={onPress}
 			disabled={disabled || loading}

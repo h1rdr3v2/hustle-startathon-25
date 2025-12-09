@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, Pressable, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
 	Button,
@@ -38,7 +38,15 @@ export default function ProfileScreen() {
 	return (
 		<SafeAreaView spaced scrollable>
 			{/* Header */}
-			<View className="mt-8 mb-6 items-center">
+			<Pressable
+				onPress={() => {
+					// If user hasn't completed KYC, navigate to KYC screen
+					if (!user?.kycCompleted) {
+						router.push('/kyc');
+					}
+				}}
+				className="mt-8 mb-6 items-center"
+			>
 				<View
 					className="w-24 h-24 rounded-full items-center justify-center mb-4"
 					style={{ backgroundColor: colors.primary + '20' }}
@@ -51,7 +59,28 @@ export default function ProfileScreen() {
 				<Subtitle color={colors.textSecondary} className="mt-1">
 					{user?.email || 'No email'}
 				</Subtitle>
-			</View>
+
+				{/* KYC Indicator */}
+				<View className="mt-3">
+					<View
+						className="px-3 py-1 rounded-full"
+						style={{
+							backgroundColor: user?.kycCompleted
+								? colors.success
+								: colors.warning,
+						}}
+					>
+						<Text
+							className="text-sm font-semibold"
+							style={{ color: '#fff' }}
+						>
+							{user?.kycCompleted
+								? 'KYC Complete'
+								: 'KYC Pending'}
+						</Text>
+					</View>
+				</View>
+			</Pressable>
 
 			{/* Profile Details */}
 			<Section>

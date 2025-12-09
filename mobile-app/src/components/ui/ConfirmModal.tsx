@@ -130,5 +130,6 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		flex: 1,
+		minHeight: 50,
 	},
 });
