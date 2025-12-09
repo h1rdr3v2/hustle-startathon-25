@@ -6,3 +6,4 @@ export * from './Input';
 export * from './StatusBadge';
 export * from './Container';
 export * from './LoadingSpinner';
+export * from './SafeAreaView';
