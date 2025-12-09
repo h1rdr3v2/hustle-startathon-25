@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root{
+  /* font variable — override from layout if you set it there */
+  --font-varela-round: 'Varela Round', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  /* CSS smooth scroll fallback (useful if you don't add class="scroll-smooth" to <html>) */
+  scroll-behavior: smooth;
+}
+
+body {
+  /* use the font variable provided by your layout or the fallback above */
+  font-family: var(--font-varela-round);
+  background-color: white;
+}
+
+
+.nftImg{
+  background: url('/assets/Frame.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
