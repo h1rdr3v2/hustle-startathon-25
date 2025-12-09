@@ -1,15 +1,15 @@
 {
-	"useTabs": true,
-	"tabWidth": 4,
-	"singleQuote": true,
-	"bracketSpacing": true,
-	"overrides": [
-		{
-			"files": "*.json",
-			"options": {
-				"useTabs": true,
-				"tabWidth": 2
-			}
-		}
-	]
+  "useTabs": true,
+  "tabWidth": 4,
+  "singleQuote": true,
+  "bracketSpacing": true,
+  "overrides": [
+    {
+      "files": "*.json",
+      "options": {
+        "useTabs": true,
+        "tabWidth": 2
+      }
+    }
+  ]
 }
