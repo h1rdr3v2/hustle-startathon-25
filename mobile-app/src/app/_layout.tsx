@@ -28,6 +28,9 @@ export default function RootLayout() {
 					<Stack.Screen name="price-preview" />
 					<Stack.Screen name="success" />
 					<Stack.Screen name="profile" />
+					<Stack.Screen name="kyc" />
+					<Stack.Screen name="runner-application" />
+					<Stack.Screen name="(runner)" />
 				</Stack>
 				<StatusBar style="auto" />
 			</ThemeProvider>

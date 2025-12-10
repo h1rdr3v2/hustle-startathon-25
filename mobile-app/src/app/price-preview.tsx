@@ -99,14 +99,14 @@ export default function PricePreviewScreen() {
 						Enter the approximate cost of items to be purchased
 					</Text>
 					<View
-						className="flex-row items-center border rounded-2xl px-4"
+						className="pb-1 flex-row items-center border rounded-2xl px-4"
 						style={{
 							backgroundColor: colors.card,
 							borderColor: colors.border,
 						}}
 					>
 						<Text
-							className="text-lg font-semibold mr-1"
+							className="text-lg pt-2.5 font-semibold mr-1"
 							style={{ color: colors.text }}
 						>
 							₦

@@ -16,7 +16,10 @@ export default function ProfileScreen() {
 	const colorScheme = useColorScheme();
 	const colors = Colors[colorScheme ?? 'light'];
 	const router = useRouter();
-	const { user, logout } = useAuthStore();
+	const { user, logout, updateRunnerStatus } = useAuthStore();
+
+	// Default to 'not_applied' if runnerStatus is undefined (for old users)
+	const runnerStatus = user?.runnerStatus ?? 'not_applied';
 
 	const handleLogout = () => {
 		Alert.alert('Logout', 'Are you sure you want to logout?', [
@@ -124,6 +127,148 @@ export default function ProfileScreen() {
 						isLast
 					/>
 				</View>
+			</Section>
+
+			{/* Runner Status Section */}
+			<Section>
+				<Text
+					className="text-lg font-bold mb-4"
+					style={{ color: colors.text }}
+				>
+					Runner Status
+				</Text>
+
+				<Pressable
+					onPress={() => {
+						updateRunnerStatus('approved');
+					}}
+				>
+					<Text>*</Text>
+				</Pressable>
+				<View
+					className="rounded-2xl p-4 mb-4"
+					style={{ backgroundColor: colors.card }}
+				>
+					<View className="flex-row justify-between items-center mb-3">
+						<Text
+							className="text-base"
+							style={{ color: colors.text }}
+						>
+							Status
+						</Text>
+						<View
+							className="px-3 py-1 rounded-full"
+							style={{
+								backgroundColor:
+									runnerStatus === 'approved'
+										? colors.success
+										: runnerStatus === 'pending'
+											? colors.warning
+											: runnerStatus === 'rejected'
+												? colors.error
+												: colors.textSecondary,
+							}}
+						>
+							<Text
+								className="text-sm font-semibold"
+								style={{ color: '#fff' }}
+							>
+								{runnerStatus === 'approved'
+									? '✓ Approved Runner'
+									: runnerStatus === 'pending'
+										? '⏳ Application Pending'
+										: runnerStatus === 'rejected'
+											? '✕ Application Rejected'
+											: 'Not a Runner'}
+							</Text>
+						</View>
+					</View>
+
+					{runnerStatus === 'approved' && user?.runnerProfile && (
+						<>
+							<View className="flex-row justify-between items-center mb-3">
+								<Text
+									className="text-base"
+									style={{ color: colors.textSecondary }}
+								>
+									Rating
+								</Text>
+								<Text
+									className="text-base font-bold"
+									style={{ color: colors.primary }}
+								>
+									⭐ {user.runnerProfile.rating.toFixed(1)}
+								</Text>
+							</View>
+
+							<View className="flex-row justify-between items-center">
+								<Text
+									className="text-base"
+									style={{ color: colors.textSecondary }}
+								>
+									Total Deliveries
+								</Text>
+								<Text
+									className="text-base font-bold"
+									style={{ color: colors.text }}
+								>
+									{user.runnerProfile.totalDeliveries}
+								</Text>
+							</View>
+						</>
+					)}
+
+					{runnerStatus === 'pending' && (
+						<Text
+							className="text-sm mt-2"
+							style={{ color: colors.textSecondary }}
+						>
+							Your application is being reviewed. We'll notify you
+							within 2-3 business days.
+						</Text>
+					)}
+
+					{runnerStatus === 'rejected' &&
+						user?.runnerApplication?.rejectionReason && (
+							<Text
+								className="text-sm mt-2"
+								style={{ color: colors.error }}
+							>
+								Reason: {user.runnerApplication.rejectionReason}
+							</Text>
+						)}
+				</View>
+
+				{/* Action Buttons based on runner status */}
+				{runnerStatus === 'not_applied' && (
+					<Button
+						title="Apply to Become a Runner"
+						onPress={() => router.push('/runner-application')}
+						fullWidth
+						size="large"
+						icon={<Text>🏃</Text>}
+					/>
+				)}
+
+				{runnerStatus === 'approved' && (
+					<Button
+						title="Open Runner Dashboard"
+						onPress={() => router.push('/(runner)/dashboard')}
+						fullWidth
+						size="large"
+						icon={<Text>📊</Text>}
+					/>
+				)}
+
+				{runnerStatus === 'rejected' && (
+					<Button
+						title="Reapply as Runner"
+						onPress={() => router.push('/runner-application')}
+						variant="outline"
+						fullWidth
+						size="large"
+					/>
+				)}
 			</Section>
 
 			{/* Stats Section */}

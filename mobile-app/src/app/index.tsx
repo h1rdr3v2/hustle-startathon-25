@@ -73,6 +73,42 @@ export default function ErrandHomeScreen() {
 				</Subtitle>
 			</View>
 
+			{/* Runner Mode Button - Only show if user is approved runner */}
+			{isAuthenticated && user?.runnerStatus === 'approved' && (
+				<TouchableOpacity
+					onPress={() => router.push('/(runner)/dashboard')}
+					className="rounded-2xl p-4 mb-6 flex-row items-center justify-between"
+					style={{
+						backgroundColor: colors.success,
+						shadowColor: '#000',
+						shadowOffset: { width: 0, height: 2 },
+						shadowOpacity: 0.1,
+						shadowRadius: 8,
+						elevation: 3,
+					}}
+				>
+					<View className="flex-row items-center gap-3 flex-1">
+						<View
+							className="w-12 h-12 rounded-full items-center justify-center"
+							style={{
+								backgroundColor: 'rgba(255, 255, 255, 0.3)',
+							}}
+						>
+							<Text className="text-2xl">🏃</Text>
+						</View>
+						<View className="flex-1">
+							<Text className="text-white text-lg font-bold">
+								Runner Mode
+							</Text>
+							<Text className="text-white text-sm opacity-90">
+								Switch to runner dashboard
+							</Text>
+						</View>
+					</View>
+					<Text className="text-white text-2xl">›</Text>
+				</TouchableOpacity>
+			)}
+
 			{/* Task Options */}
 			<View className="mb-8">
 				{ERRAND_TASK_OPTIONS.map((option) => (

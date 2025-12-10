@@ -1,13 +1,13 @@
 // Mock API functions for authentication
 
 import {
-	User,
-	LoginCredentials,
-	SignupData,
-	OTPVerification,
 	ApiResponse,
+	LoginCredentials,
+	OTPVerification,
+	SignupData,
+	User,
 } from '@/src/core/types';
-import { mockDelay, generateId } from '../utils/helpers';
+import { generateId, mockDelay } from '../utils/helpers';
 
 /**
  * Mock login function
@@ -26,6 +26,7 @@ export const mockLogin = async (
 			email: credentials.email,
 			phone: '08012345678',
 			role: 'user',
+			runnerStatus: 'not_applied',
 			location: {
 				latitude: 5.5256,
 				longitude: 7.4905,
@@ -65,6 +66,7 @@ export const mockSignup = async (
 		email: data.email,
 		phone: data.phone,
 		role: data.role,
+		runnerStatus: 'not_applied',
 		location: {
 			latitude: 5.5256,
 			longitude: 7.4905,

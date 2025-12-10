@@ -9,6 +9,8 @@ export interface Location {
 // ==================== USER ====================
 export type UserRole = 'user' | 'runner' | 'both';
 
+export type RunnerStatus = 'not_applied' | 'pending' | 'approved' | 'rejected';
+
 export interface User {
 	id: string;
 	name: string;
@@ -19,7 +21,77 @@ export interface User {
 	location?: Location;
 	// Whether the user has completed KYC verification
 	kycCompleted?: boolean;
+	// Runner application status
+	runnerStatus: RunnerStatus;
+	// Runner profile info (only if approved)
+	runnerProfile?: RunnerProfile;
+	// Application data (only if pending or approved)
+	runnerApplication?: RunnerApplication;
 	createdAt: Date;
+}
+
+// ==================== RUNNER APPLICATION ====================
+export type VehicleType = 'bicycle' | 'motorcycle' | 'car' | 'on_foot';
+
+export interface RunnerApplication {
+	id: string;
+	userId: string;
+	status: RunnerStatus;
+
+	// Personal Information
+	fullName: string;
+	email: string;
+	phone: string;
+	dateOfBirth: string;
+	address: string;
+	city: 'Umuahia' | 'Aba' | 'Ohafia';
+
+	// Vehicle Information
+	vehicleType: VehicleType;
+	vehicleMake?: string;
+	vehicleModel?: string;
+	vehicleYear?: string;
+	vehiclePlateNumber?: string;
+
+	// Documents
+	hasDriversLicense: boolean;
+	driversLicenseNumber?: string;
+	hasVehicleRegistration?: boolean;
+
+	// Experience
+	hasDeliveryExperience: boolean;
+	deliveryExperienceYears?: number;
+	previousEmployer?: string;
+
+	// Availability
+	availableDays: string[]; // e.g., ['Monday', 'Tuesday', 'Wednesday']
+	availableHours: string; // e.g., '9 AM - 6 PM'
+
+	// Additional
+	whyJoin: string;
+	hearAboutUs?: string;
+
+	// Timestamps
+	appliedAt: Date;
+	reviewedAt?: Date;
+	rejectionReason?: string;
+}
+
+export interface RunnerProfile {
+	userId: string;
+	rating: number;
+	totalDeliveries: number;
+	completedDeliveries: number;
+	cancelledDeliveries: number;
+	totalEarnings: number;
+	availableEarnings: number;
+	isAvailable: boolean;
+	currentLocation?: Location;
+	activeTaskId?: string;
+	// Stats
+	acceptanceRate: number; // percentage
+	onTimeRate: number; // percentage
+	joinedAsRunnerAt: Date;
 }
 
 // ==================== RUNNER ====================
@@ -33,6 +105,8 @@ export interface Runner {
 	currentLocation: Location;
 	isAvailable: boolean;
 	earnings: number;
+	vehicleType?: VehicleType;
+	profilePicture?: string;
 }
 
 // ==================== WALLET & PAYMENT ====================
