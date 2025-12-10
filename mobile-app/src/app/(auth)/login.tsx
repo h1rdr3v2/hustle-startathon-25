@@ -27,8 +27,7 @@ export default function LoginScreen() {
 
 		if (res.success && res.data) {
 			setAuth(res.data.user, res.data.token);
-			// @ts-ignore
-			router.replace('/index');
+			router.replace('/');
 		} else {
 			alert(res.error || 'Login failed');
 		}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { LogBox, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { OptionCard, SafeAreaView, Subtitle, Title } from '@/src/components/ui';
 import { ERRAND_TASK_OPTIONS } from '@/src/core/constants/errandTasks';
@@ -7,6 +7,8 @@ import { Colors } from '@/src/core/constants/theme';
 import { useColorScheme } from '@/src/core/hooks/use-color-scheme';
 import { useAuthStore } from '@/src/core/stores/authStore';
 import { useErrandFlowStore } from '@/src/core/stores/errandFlowStore';
+
+LogBox.ignoreAllLogs(true); // Ignore all log notifications
 
 export default function ErrandHomeScreen() {
 	const colorScheme = useColorScheme();
